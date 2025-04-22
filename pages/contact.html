@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>联系我们 - 青林谜语村</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/contact.css">
+</head>
+<body>
+    <!-- 背景音乐 -->
+    <audio id="bgMusic" loop>
+        <source src="image/music.mp3" type="audio/mpeg">
+        您的浏览器不支持音频播放。
+    </audio>
+    <button id="musicToggle" class="music-toggle">
+        <span class="music-icon">🔇</span>
+    </button>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">青林谜语村</div>
+            <ul class="nav-links">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="master.html">谜语传承</a></li>
+                <li><a href="culture.html">非遗文化</a></li>
+                <li><a class="active-nav" href="contact.html">联系我们</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 联系信息 -->
+    <section class="contact-section">
+        <h1>联系我们</h1>
+        <div class="contact-grid">
+            <div class="contact-card">
+                <i class="icon location-icon"></i>
+                <h3>景区地址</h3>
+                <p>湖北省宜都市高坝洲镇青林村</p>
+                <p>邮编：443300</p>
+            </div>
+            <div class="contact-card">
+                <i class="icon phone-icon"></i>
+                <h3>客服热线</h3>
+                <p>景区咨询：0717-4772777  0717-4880008</p>
+                <p>团队预约：0717-4772777  0717-4880008</p>
+            </div>
+            <div class="contact-card">
+                <i class="icon time-icon"></i>
+                <h3>开放时间</h3>
+                <p>周一至周日：9:00-17:00</p>
+                <p>（节假日延长至18:00）</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 地图区域 -->
+    <section class="map-section">
+        <h2>交通指南</h2>
+        <div class="map-container">
+            <div class="map-info">
+                <h3>自驾路线</h3>
+                <p>从宜昌市区出发：</p>
+                <ul>
+                    <li>沿宜昌长江大桥 → 宜都大道 → 高坝洲镇 → 青林寺村</li>
+                    <li>全程约45公里，车程约1小时</li>
+                </ul>
+                <h3>公共交通</h3>
+                <ul>
+                    <li>宜昌客运站乘坐至高坝洲镇的班车</li>
+                    <li>在高坝洲镇转乘景区专线车</li>
+                </ul>
+                <a href="https://sxyc.qj720.cn/vr/qinglinmizhen.html">点击进入青林秘真VR之旅</a>
+            </div>
+            <div class="map-image">
+                <img src="image/line.jpg" alt="景区地图">
+            </div>
+        </div>
+    </section>
+
+    <!-- 预约导览 -->
+    <section class="booking">
+        <h2>预约导览</h2>
+        <div class="booking-container">
+            <form class="booking-form" id="bookingForm">
+                <div class="form-group">
+                    <label for="name">姓名：</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">客服热线：</label>
+                    <input type="tel" id="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">邮箱：</label>
+                    <input type="email" id="email">
+                </div>
+                <div class="form-group">
+                    <label for="date">参观日期：</label>
+                    <input type="date" id="date" required>
+                </div>
+                <div class="form-group">
+                    <label for="people">人数：</label>
+                    <input type="number" id="people" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="type">参观类型：</label>
+                    <select id="type" required>
+                        <option value="">请选择</option>
+                        <option value="individual">个人参观</option>
+                        <option value="group">团队参观</option>
+                        <option value="study">研学活动</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="message">备注信息：</label>
+                    <textarea id="message" rows="4"></textarea>
+                </div>
+                <button type="submit" class="submit-btn">提交预约</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- 常见问题 -->
+    <section class="faq-section">
+        <h2>常见问题</h2>
+        <div class="faq-container">
+            <div class="faq-item">
+                <h3>门票信息</h3>
+                <p>成人票：60元/人<br>
+                   学生票：30元/人（需持有效学生证）<br>
+                   儿童票：免费（1.2米以下）</p>
+            </div>
+            <div class="faq-item">
+                <h3>停车信息</h3>
+                <p>景区设有专门停车场，可容纳大巴、小轿车等车辆<br>
+                   停车费：小车15元/次，大巴30元/次</p>
+            </div>
+            <div class="faq-item">
+                <h3>导游服务</h3>
+                <p>中文讲解：100元/团<br>
+                   英文讲解：200元/团<br>
+                   需提前预约</p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-content">
+            <div class="contact-info">
+                <h3>联系方式</h3>
+                <p>地址：湖北省宜都市高坝洲镇青林村</p>
+                <p>客服热线：0717-4772777  0717-4880008</p>
+                <p>邮箱：qinglin@riddle.com</p>
+            </div>
+            <div class="qr-code">
+                <img src="image/qrcode.jpg" alt="微信公众号二维码">
+                <p>扫码关注公众号</p>
+            </div>
+        </div>
+    </footer>
+    <script>
+        const music = document.getElementById('bgMusic');
+        const musicToggle = document.getElementById('musicToggle');
+        const musicIcon = musicToggle.querySelector('.music-icon');
+        let isPlaying = false;
+
+        musicToggle.addEventListener('click', () => {
+            if (!isPlaying) {
+                music.play()
+                    .then(() => {
+                        isPlaying = true;
+                        musicIcon.textContent = '🔊';
+                    })
+                    .catch(error => {
+                        console.log("播放失败:", error);
+                    });
+            } else {
+                music.pause();
+                isPlaying = false;
+                musicIcon.textContent = '🔇';
+            }
+        });
+       
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // 阻止表单默认提交
+            alert('预约提交成功！我们会尽快与您联系。');
+            this.reset(); // 重置表单
+        });
+    
+    
+    </script>
+</body>
+</html> 

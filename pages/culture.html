@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>非遗文化 - 青林谜语村</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/culture.css">
+</head>
+<body>
+    <!-- 背景音乐 -->
+    <audio id="bgMusic" loop>
+        <source src="image/music.mp3" type="audio/mpeg">
+        您的浏览器不支持音频播放。
+    </audio>
+    <button id="musicToggle" class="music-toggle">
+        <span class="music-icon">🔇</span>
+    </button>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">青林谜语村</div>
+            <ul class="nav-links">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="master.html">谜语传承</a></li>
+                <li><a class="active-nav" href="culture.html">非遗文化</a></li>
+                <li><a href="contact.html">联系我们</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 景区介绍 -->
+    <section class="scenic-intro">
+        <h1>青林古镇 - 中国谜语村</h1>
+        <div class="scenic-overview">
+            <img src="image/c1.jpg" alt="青林古镇航拍图" class="main-image">
+            <p class="intro-text">青林古镇，素有"清江明珠"之美誉，是三峡库区著名的千年古镇。这里不仅有清江帆影、黛瓦白墙的江南韵味，更是中国谜语文化的重要发源地。如今的青林古镇已发展成为集谜语文化、康养休闲、乡村旅游一体化的特色小镇。</p>
+        </div>
+
+        <!-- 景点特色 -->
+        <div class="features-grid">
+            <div class="feature-card">
+                <!-- 修改为指向新页面的链接 -->
+                <a href="qinglin-temple.html">
+                    <img src="image/c2.jpg" alt="青林寺">
+                    <h3>青林寺景区</h3>
+                    <p>千年古刹，谜语文化发源地，常年举办谜语会演活动</p>
+                </a>
+            </div>
+            <div class="feature-card">
+                <!-- 修改为指向新页面的链接 -->
+                <a href="riddle-street.html">
+                    <img src="image/c3.jpg" alt="谜语文化街">
+                    <h3>谜语文化街</h3>
+                    <p>街道两旁刻有精选谜语，游客可边走边猜，感受谜语魅力</p>
+                </a>
+            </div>
+            <div class="feature-card">
+                <!-- 修改为指向新页面的链接 -->
+                <a href="riddle-park.html">
+                    <img src="image/c4.jpg" alt="谜语主题园">
+                    <h3>谜语主题园</h3>
+                    <p>融合现代科技与传统文化，打造沉浸式谜语体验空间</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 文创产品展示 -->
+    <section class="cultural-products">
+        <h2>谜语文创产品</h2>
+        <div class="products-grid">
+            <div class="product-card">
+                <img src="image/cp1.jpg" alt="谜语集">
+            </div>
+
+            <div class="product-card">
+                <img src="image/cp2.jpg" alt="谜语拼图">
+            </div>
+
+            <div class="product-card">
+                <img src="image/cp3.jpg" alt="谜语卡片">
+            </div>
+
+            <div class="product-card">
+                <img src="image/cp4.jpg" alt="谜语茶具">
+            </div>
+        </div>
+    </section>
+
+    <!-- 特色活动 -->
+    <section class="special-events">
+        <h2>特色文化活动</h2>
+        <div class="events-container">
+          <a href="riddle-festival.html">
+            <div class="event-card">
+                <img src="image/j1.jpg" alt="谜语节">
+                <div class="event-info">
+                    <h3>青林谜语文化节</h3>
+                    <p>每年农历二月初二举办，邀请全国谜语爱好者共襄盛举</p>
+                    <span class="date">2024年春季</span>
+                </div>
+            </div>
+        </a>
+
+            <a href="yiyuan-farmhouse.html">
+            <div class="event-card">
+                
+                <img src="image/j2.jpg" alt="谜语工坊">
+                <div class="event-info">
+                    <h3>颐园</h3>
+                    <p>取名自颐养天年，正好在举办农家宴席。听说是景区自己开发的文创产品-青林谜酒。</p>
+                </div>    
+            </div>
+        </a>
+        </div>
+    </section>
+
+
+    <footer>
+        <div class="footer-content">
+            <div class="contact-info">
+                <h3>联系方式</h3>
+                <p>地址：湖北省宜都市高坝洲镇青林村</p>
+                <p>客服热线：0717-4772777  0717-4880008</p>
+                <p>邮箱：qinglin@riddle.com</p>
+            </div>
+            <div class="qr-code">
+                <img src="image/qrcode.jpg" alt="微信公众号二维码">
+                <p>扫码关注公众号</p>
+            </div>
+        </div>
+    </footer>
+    <script>
+        const music = document.getElementById('bgMusic');
+        const musicToggle = document.getElementById('musicToggle');
+        const musicIcon = musicToggle.querySelector('.music-icon');
+        let isPlaying = false;
+
+        musicToggle.addEventListener('click', () => {
+            if (!isPlaying) {
+                music.play()
+                    .then(() => {
+                        isPlaying = true;
+                        musicIcon.textContent = '🔊';
+                    })
+                    .catch(error => {
+                        console.log("播放失败:", error);
+                    });
+            } else {
+                music.pause();
+                isPlaying = false;
+                musicIcon.textContent = '🔇';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,50 +1,171 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>111</title>
-<link href="css/styles.css" rel="stylesheet" type="text/css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>青林古镇 - 中国谜语第一村</title>
+    <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
-<div class="wrapper">
-	<header>
-    	<h1><a>生物11111</a></h1>
-        <nav>
-        	<ul>
-				<li ><a href="index.html">首页</a></li>
-            	<li ><a href="butterfly.html">蝴蝶标本</a></li>
-                <li ><a href="bird.html">鸟类标本</a></li>
-            </ul>
-        </nav>
-        <div class="clearfloat"></div>
-      <hr>
-	</header>
-        <div class="clearfloat"></div>
-		<div class="parkNews">
-            <ul>
-                <li>
-					<h3><a href="butterfly.html">蝴蝶-Butterfly</a></h3>
-                    <div><a href="butterfly.html"><img src="images/butterfly.jpg" alt="photo"></a></div>
-                    <div class="blockTitle"></div>
-                    <p>&nbsp;&nbsp;蝴蝶是自然界中最引人注目的昆虫之一。它们的翅膀覆以色彩斑斓的鳞片，形成独特的图案和色彩，令人惊叹。全球大约存在超过17,500种蝴蝶，它们栖息于各种生态环境中，从茂密的热带雨林到干燥的草原。世界上存在记录的蝴蝶有20000多种，最大的蝴蝶展翅可达28～31㎝，最小的只有 0.7㎝左右——像体型最大的是新几内亚东部的亚历山大女皇鸟翼凤蝶，雌性翼展可达31㎝；最小的是阿富汗的渺灰蝶，展翅只有0.7㎝。在中国有约2153种蝴蝶。</p>
-                    <p class="more"><a href="butterfly.html">more <img src="images/p.png" alt="link"></a></p>
-                </li>
-                <li>
-					<h3><a href="bird.html">鸟-Bird</a></h3>
-                	<div><a href="bird.html"><img src="images/bird.jpg" alt="photo"></a></div>
-                    <div class="birchNewsContent">
-                    	<div class="blockTitle"></div>
-                        <p>&nbsp;&nbsp;鸟是脊椎动物亚门的一纲，是所有鸟类动物的统称。身体呈流线型，皮肤薄而有韧性；体表覆羽毛，一般前肢变成翼，有的种类翼退化；胸肌发达；直肠短；心脏有两心房和两心室，体温恒定。在人工饲养条件下，大型鸟类寿命30—50年，中等类型鸟类寿命20—30年，小型鸟类寿命10—15年。鸟分布于世界各地。大多数在白天活动，少数鸟在黄昏或者夜间活动。可分为食肉、食鱼、食虫和食植物等类型，还有很多居间类型和杂食类型。</p>
-                        <p class="more"><a href="bird.html">more <img src="images/p.png" alt="link"></a></p>
-                    </div>
-              </li>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">青林谜语村</div>
+            <ul class="nav-links">
+                <li><a class="active-nav" href="index.html">首页</a></li>
+                <li><a href="master.html">谜语传承</a></li>
+                <li><a href="culture.html">非遗文化</a></li>
+                <li><a href="contact.html">联系我们</a></li>
             </ul>
         </div>
-    <div class="clearfloat"></div>
-  <div class="birchNews">	
-        <div class="clearfloat"></div>
-  </div>
-</div>
+    </nav>
+
+    <!-- 背景音乐 -->
+    <audio id="bgMusic" loop>
+        <source src="image/music.mp3" type="audio/mpeg">
+        您的浏览器不支持音频播放。
+    </audio>
+    <button id="musicToggle" class="music-toggle">
+        <span class="music-icon">🔇</span>
+    </button>
+
+    <!-- 顶部横幅 -->
+    <section class="hero-banner">
+        <div class="banner-content">
+            <h1>青林古镇 - 中国民间谜语第一村</h1>
+            <p class="subtitle">巴渝文化与巴楚文化的交汇之地</p>
+        </div>
+    </section>
+    <!-- 首页主要内容 -->
+    <div class="main-container">
+
+        <!-- 历史渊源部分 -->
+        <section class="history-section">
+            <div class="section-title">
+                <h2>青林寺村的前世今生</h2>
+                <div class="title-decoration"></div>
+            </div>
+            
+            <div class="history-content">
+                <div class="history-card">
+                    <div class="card-image">
+                        <img src="image/index1.jpg" alt="青林寺历史">
+                    </div>
+                    <div class="card-text">
+                        <h3>寺名由来</h3>
+                        <p>青林寺村的得名，源于村中的一座寺庙——青林寺。此寺始建于盛唐时期，已有1300多年历史。寺内古木参天，青石板路两侧点缀着碑亭、牌坊等古迹，香火旺盛。寺内供奉着弥勒佛，每逢佛事活动更是香客云集、热闹非凡。相传南宋理学家朱熹曾在此与和尚对弈谜语，明代医学家李时珍也曾来此求医问药，并留下"朱子来此弄禅机，李时珍来此采药汤"的对联，为这座千年古寺增添了几分文人雅趣。</p>
+                    </div>
+                </div>
+
+                <div class="history-card reverse">
+                    <div class="card-image">
+                        <img src="image/index2.jpg" alt="村落发展">
+                    </div>
+                    <div class="card-text">
+                        <h3>村落演变</h3>
+                        <p>青林寺村原是赵家坪和廖家湾两个自然村落。清末民初，随着清江航运的鼎盛，各种商号、客栈应运而生，逐渐形成了以游士坡为中心的繁荣村落。村内散落着大大小小上百座院落，错落有致，灰瓦黛瓦的民居墙基打磨得平整光滑，散发着久远的历史气息。如今，青林寺村已发展成为融合民俗文化、宗教文化、自然景观为一体的人文旅游胜地。其中最引人注目的是一座仿古的八角形福建土楼"颐园"，白墙红柱与周边古建筑相映成趣，中庭静谧，营造出一种远离尘嚣、禅意悠然的氛围。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 地理位置部分 -->
+        <section class="location-section">
+            <div class="section-title">
+                <h2>地理风貌</h2>
+                <div class="title-decoration"></div>
+            </div>
+            
+            <div class="location-content">
+                <div class="location-map">
+                    <img width="650" src="image/index3.jpg" alt="青林寺村地理位置">
+                </div>
+                <div class="location-info">
+                    <p>现在的青林寺村，位于宜都市高坝洲镇，长江与清江交汇处，是一个依山傍水的村庄。半岛环湖，山峦溢翠，水波流光，自然环境优美。这里不仅是水陆交通要道，更是历史文化荟萃之地。村落三面环水，一面靠山，独特的地理位置造就了其"枕山抱水"的自然格局，也为其谜语文化的传承提供了得天独厚的环境。春日山花烂漫，夏季郁郁葱葱，秋天层林尽染，冬季白雪皑皑，四季分明的气候特点为这片土地增添了无限诗意。</p>
+                    <ul class="location-features">
+                        <li>陆路通恩施、四川的官道穿村而过</li>
+                        <li>设驿站于游士坡，曾是重要的交通枢纽</li>
+                        <li>2001年3月与廖家湾村合并，扩大村域范围</li>
+                        <li>四周遍布古人类遗址，出土大量文物</li>
+                        <li>三面环水的地理格局，形成天然屏障</li>
+                        <li>境内山清水秀，自然资源丰富</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 文化特色部分 -->
+        <section class="culture-section">
+            <div class="section-title">
+                <h2>谜语文化</h2>
+                <div class="title-decoration"></div>
+            </div>
+            
+            <div class="culture-grid">
+                <div class="culture-item">
+                    <!-- <a href="culture-detail.html" class="culture-link"> -->
+                     <div class="culture-icon">
+                        <img src="image/index4.jpg" alt="历史传承">
+                     </div>
+                     <h3>深厚积淀</h3>
+                     <p>青林寺村是中国民间谜语的发源地，村民世世代代以创作谜语、谜歌为乐。从小孩到老人，人人都会猜谜，形成了独特的民间文化传统。</p>
+                    <!-- </a> -->
+                </div>
+                <div class="culture-item">
+                    <div class="culture-icon">
+                        <img src="image/index5.jpg" alt="文化交融">
+                    </div>
+                    <h3>文化交融</h3>
+                    <p>作为巴渝文化、巴楚文化的交汇之地，这里不仅有普通村民，还有精通佛法且能创作谜语的"谜僧"，形成了独特的民间文化氛围。</p>
+                </div>
+                <div class="culture-item">
+                    <div class="culture-icon">
+                        <img src="image/index6.jpg" alt="谜语之乡">
+                    </div>
+                    <h3>谜语之乡</h3>
+                    <p>因其独特的谜语文化传承，青林寺村被誉为"中国民间谜语第一村"。著名谜歌大王赵兴寿就出自这里，多次登上央视舞台展示青林谜语文化。</p>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-content">
+            <div class="contact-info">
+                <h3>联系方式</h3>
+                <p>地址：湖北省宜都市高坝洲镇青林村</p>
+                <p>客服热线：0717-4772777  0717-4880008</p>
+                <p>邮箱：qinglin@riddle.com</p>
+            </div>
+            <div class="qr-code">
+                <img src="image/qrcode.jpg" alt="微信公众号二维码">
+                <p>扫码关注公众号</p>
+            </div>
+        </div>
+    </footer>
+    <script>
+        const music = document.getElementById('bgMusic');
+        const musicToggle = document.getElementById('musicToggle');
+        const musicIcon = musicToggle.querySelector('.music-icon');
+        let isPlaying = false;
+
+        musicToggle.addEventListener('click', () => {
+            if (!isPlaying) {
+                music.play()
+                    .then(() => {
+                        isPlaying = true;
+                        musicIcon.textContent = '🔊';
+                    })
+                    .catch(error => {
+                        console.log("播放失败:", error);
+                    });
+            } else {
+                music.pause();
+                isPlaying = false;
+                musicIcon.textContent = '🔇';
+            }
+        });
+    </script>
 </body>
 </html>
