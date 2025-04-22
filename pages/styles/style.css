@@ -1,0 +1,420 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Microsoft YaHei", sans-serif;
+    line-height: 1.6;
+}
+a{
+    text-decoration: none;
+}
+
+/* 导航栏样式 */
+.navbar {
+    background-color: #1e3f66;
+    padding: 16px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 32px;
+}
+
+.logo {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+}
+
+.nav-links li a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+    margin: 0 8px;
+}
+.active-nav{
+    color: #7fb8ff!important;
+}
+/* 首页样式 */
+.hero {
+    padding: 128px 32px 64px;
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/qinglin-bg.jpg');
+    background-size: cover;
+    color: white;
+    text-align: center;
+}
+.culture-link{
+    color: #000;
+    text-decoration: none;
+}
+/* 非遗传承人部分样式 */
+.master-section {
+    padding: 64px 32px;
+    background-color: #f5f5f5;
+}
+
+.master-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+/* 谜语互动区样式 */
+.riddle-section {
+    padding: 64px 32px;
+    background-color: white;
+}
+
+.riddle-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* 尾页样式 */
+.footer {
+    background-color: #1e3f66;
+    color: white;
+    padding: 48px 32px;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+}
+
+.social-links {
+    display: flex;
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.social-link {
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+    border: 1px solid white;
+    border-radius: 4px;
+}
+
+/* 首页特定样式 */
+.intro-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.intro-content h2 {
+    color: #1e3f66;
+    margin: 2rem 0 1rem;
+}
+
+.intro-content > div {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2rem;
+    margin: 2rem 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* 传承人页面样式 */
+.master-profile {
+    padding-top: 80px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 6rem 2rem 2rem;
+}
+
+.master-story {
+    background: #f5f5f5;
+    padding: 2rem;
+    border-radius: 8px;
+    margin: 2rem 0;
+}
+
+
+.interactive-section {
+    background: #e8f4f8;
+    padding: 2rem;
+    border-radius: 8px;
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.news-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    margin: 2rem 0;
+}
+
+.news-item {
+    border-left: 4px solid #1e3f66;
+    padding-left: 1rem;
+    margin: 1rem 0;
+}
+
+/* 主容器样式 */
+.main-container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-top: 60px;
+}
+
+/* 顶部横幅样式 */
+.hero-banner {
+    background-image:  url('../image/3.jpg');
+    height: 600px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+}
+
+.banner-content h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    font-weight: 300;
+}
+
+/* 章节标题样式 */
+.section-title {
+    text-align: center;
+    margin: 4rem 0 2rem;
+}
+
+.title-decoration {
+    width: 60px;
+    height: 3px;
+    background-color: #1e3f66;
+    margin: 1rem auto;
+}
+
+/* 历史卡片样式 */
+.history-card {
+    display: flex;
+    margin: 2rem 0;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.history-card.reverse {
+    flex-direction: row-reverse;
+}
+
+.card-image {
+    flex: 1;
+    min-height: 300px;
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-text {
+    flex: 1;
+    padding: 2rem;
+    h3{
+        margin-bottom: 20px;
+    }
+    p{
+        line-height: 32px;
+    }
+}
+
+/* 地理位置样式 */
+.location-section {
+    background: #f5f5f5;
+    padding: 4rem 0;
+}
+
+.location-content {
+    display: flex;
+    gap: 2rem;
+    padding: 0 2rem;
+}
+
+.location-map {
+    flex: 1;
+}
+
+.location-info {
+    flex: 1;
+    padding: 2rem;
+}
+
+.location-features {
+    margin-top: 1rem;
+    list-style: none;
+}
+
+.location-features li {
+    padding: 0.5rem 0;
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.location-features li:before {
+    content: "•";
+    color: #1e3f66;
+    position: absolute;
+    left: 0;
+}
+
+/* 文化特色网格样式 */
+.culture-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.culture-item {
+    text-align: center;
+    padding: 2rem;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.culture-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1rem;
+}
+
+.culture-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.master-image{
+    text-align: center;
+    margin: 25px;
+}
+
+@media (max-width: 768px) {
+    .history-card, .history-card.reverse {
+        flex-direction: column;
+    }
+    
+    .location-content {
+        flex-direction: column;
+    }
+    
+    .culture-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 页脚样式 */
+footer {
+    background: #2c3e50;
+    color: white;
+    padding: 40px 20px;
+    margin-top: 60px;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.contact-info h3 {
+    margin-bottom: 15px;
+    font-size: 1.2em;
+}
+
+.contact-info p {
+    margin: 5px 0;
+    font-size: 0.9em;
+}
+
+.qr-code {
+    text-align: center;
+}
+
+.qr-code img {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 10px;
+}
+
+.qr-code p {
+    font-size: 0.9em;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .qr-code {
+        margin-top: 20px;
+    }
+} 
+.music-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ddd;
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.music-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+}
+
+.music-icon {
+    font-size: 20px;
+}
