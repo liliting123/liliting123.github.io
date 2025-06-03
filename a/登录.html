@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>膳食中医 - 登录/注册</title>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <style>
+    /* 复用全站基础样式 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Noto Serif SC', serif;
+    }
+
+    body {
+      background: #f5f2eb;
+      line-height: 1.6;
+      color: #3c2a21;
+    }
+
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(245, 242, 235, 0.95);
+      padding: 1rem 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.1);
+      z-index: 1000;
+    }
+
+    .header .logo {
+      display: flex;
+      align-items: center;
+      color: #8b4513;
+      text-decoration: none;
+    }
+
+    .header .logo i {
+      font-size: 2.2rem;
+      margin-right: 0.5rem;
+    }
+
+    .header .nav a {
+      margin-left: 2rem;
+      font-size: 1.1rem;
+      color: #3c2a21;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .header .nav a:hover {
+      color: #228b22;
+    }
+
+    .footer {
+      background: #3c2a21;
+      color: white;
+      padding: 3rem 4%;
+      margin-top: 3rem;
+    }
+
+    /* 登录/注册页面专属样式 */
+    .auth-container {
+      max-width: 900px;
+      margin: 8rem auto 2rem;
+      padding: 0 4%;
+    }
+
+    .auth-card {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    @media (min-width: 768px) {
+      .auth-card {
+        flex-direction: row;
+      }
+    }
+
+    .auth-left {
+      background: #8b4513;
+      color: white;
+      padding: 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .auth-left h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .auth-left p {
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 2rem;
+    }
+
+    .auth-left .btn {
+      background: white;
+      color: #8b4513;
+      padding: 0.8rem 2rem;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background 0.3s;
+    }
+
+    .auth-left .btn:hover {
+      background: #f5f2eb;
+    }
+
+    .auth-right {
+      padding: 3rem;
+    }
+
+    .auth-tabs {
+      display: flex;
+      margin-bottom: 2rem;
+    }
+
+    .auth-tab {
+      flex: 1;
+      text-align: center;
+      padding: 0.8rem 0;
+      font-size: 1.2rem;
+      font-weight: 500;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.3s;
+    }
+
+    .auth-tab.active {
+      color: #8b4513;
+      border-bottom-color: #8b4513;
+    }
+
+    .auth-form {
+      display: none;
+    }
+
+    .auth-form.active {
+      display: block;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #8b4513;
+      box-shadow: 0 0 0 2px rgba(139, 69, 19, 0.1);
+    }
+
+    .form-group .error-message {
+      color: #e53e3e;
+      font-size: 0.9rem;
+      margin-top: 0.3rem;
+      display: none;
+    }
+
+    .form-group.error input {
+      border-color: #e53e3e;
+    }
+
+    .form-group.error .error-message {
+      display: block;
+    }
+
+    .remember-me {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .remember-me input {
+      margin-right: 0.5rem;
+    }
+
+    .auth-button {
+      width: 100%;
+      background: #8b4513;
+      color: white;
+      padding: 0.8rem;
+      border: none;
+      border-radius: 5px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .auth-button:hover {
+      background: #6a340f;
+    }
+
+    .social-login {
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    .social-login p {
+      margin-bottom: 1rem;
+    }
+
+    .social-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .social-button {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #f5f2eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #3c2a21;
+      transition: background 0.3s;
+    }
+
+    .social-button:hover {
+      background: #e8e4d9;
+    }
+
+    .toggle-form {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+    }
+
+    .toggle-form button {
+      background: none;
+      border: none;
+      color: #8b4513;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    /* 响应式设计 */
+    @media (max-width: 767px) {
+      .auth-left {
+        padding: 2rem;
+      }
+
+      .auth-right {
+        padding: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 头部导航栏（与全站一致） -->
+  <header class="header">
+    <a href="首页.html" class="logo">
+      <i class="fa fa-leaf"></i>
+      膳食中医
+    </a>
+    <nav class="nav">
+      <a href="首页.html">首页</a>
+      <a href="养生课堂.html">养生课堂</a>
+      <a href="专家咨询.html">专家咨询</a>
+      <a href="订购膳食.html">订购膳食</a>
+      <a href="登录.html" class="active">登录/注册</a> <!-- 当前页面标记 -->
+    </nav>
+  </header>
+
+  <!-- 主内容区域 -->
+  <main class="auth-container">
+    <div class="auth-card">
+      <!-- 左侧介绍部分 -->
+      <div class="auth-left">
+        <i class="fa fa-user-circle text-5xl mb-3"></i>
+        <h2>加入我们的健康社区</h2>
+        <p>注册成为会员，获取专属健康膳食方案和中医养生指导</p>
+        <a href="#" class="btn">了解更多</a>
+      </div>
+      
+      <!-- 右侧表单部分 -->
+      <div class="auth-right">
+        <!-- 表单切换选项卡 -->
+        <div class="auth-tabs">
+          <div class="auth-tab active" id="login-tab">登录</div>
+          <div class="auth-tab" id="register-tab">注册</div>
+        </div>
+        
+        <!-- 登录表单 -->
+        <form id="login-form" class="auth-form active">
+          <div class="form-group">
+            <label for="login-username">手机号/邮箱</label>
+            <input type="text" id="login-username" placeholder="请输入手机号或邮箱">
+            <div class="error-message">请输入有效的手机号或邮箱</div>
+          </div>
+          
+          <div class="form-group">
+            <label for="login-password">密码</label>
+            <input type="password" id="login-password" placeholder="请输入密码">
+            <div class="error-message">密码长度不能少于6位</div>
+          </div>
+          
+          <div class="remember-me">
+            <input type="checkbox" id="remember-me">
+            <label for="remember-me">记住我</label>
+          </div>
+          
+          <button type="button" class="auth-button" id="login-submit">登录</button>
+          
+          <div class="social-login">
+            <p>其他登录方式</p>
+            <div class="social-buttons">
+              <a href="#" class="social-button"><i class="fa fa-weixin"></i></a>
+              <a href="#" class="social-button"><i class="fa fa-qq"></i></a>
+              <a href="#" class="social-button"><i class="fa fa-weibo"></i></a>
+            </div>
+          </div>
+          
+          <div class="toggle-form">
+            <p>还没有账号？<button id="show-register">立即注册</button></p>
+          </div>
+        </form>
+        
+        <!-- 注册表单 -->
+        <form id="register-form" class="auth-form">
+          <div class="form-group">
+            <label for="register-name">姓名</label>
+            <input type="text" id="register-name" placeholder="请输入您的姓名">
+            <div class="error-message">请输入您的姓名</div>
+          </div>
+          
+          <div class="form-group">
+            <label for="register-phone">手机号</label>
+            <input type="tel" id="register-phone" placeholder="请输入手机号">
+            <div class="error-message">请输入有效的手机号</div>
+          </div>
+          
+          <div class="form-group">
+            <label for="register-email">邮箱</label>
+            <input type="email" id="register-email" placeholder="请输入邮箱">
+            <div class="error-message">请输入有效的邮箱</div>
+          </div>
+          
+          <div class="form-group">
+            <label for="register-password">密码</label>
+            <input type="password" id="register-password" placeholder="请设置密码">
+            <div class="error-message">密码长度不能少于6位</div>
+          </div>
+          
+          <div class="form-group">
+            <label for="register-confirm">确认密码</label>
+            <input type="password" id="register-confirm" placeholder="请再次输入密码">
+            <div class="error-message">两次输入的密码不一致</div>
+          </div>
+          
+          <div class="form-group">
+            <label class="flex items-start">
+              <input type="checkbox" id="agree-terms">
+              <span class="ml-2 text-sm">我已阅读并同意<a href="#" class="text-primary">《用户协议》</a>和<a href="#" class="text-primary">《隐私政策》</a></span>
+            </label>
+            <div class="error-message">请同意用户协议和隐私政策</div>
+          </div>
+          
+          <button type="button" class="auth-button" id="register-submit">注册</button>
+          
+          <div class="toggle-form">
+            <p>已有账号？<button id="show-login">立即登录</button></p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <!-- 页脚（与全站一致） -->
+  <footer class="footer">
+    <div class="container">
+      <p>© 2025 膳食中医 版权所有 | 京ICP备12345678号</p>
+      <p>联系我们：400-888-8888 | info@shanshizhongyi.com</p>
+    </div>
+  </footer>
+
+  <script>
+    // 表单切换功能
+    const loginTab = document.getElementById('login-tab');
+    const registerTab = document.getElementById('register-tab');
+    const loginForm = document.getElementById('login-form');
+    const registerForm = document.getElementById('register-form');
+    const showRegister = document.getElementById('show-register');
+    const showLogin = document.getElementById('show-login');
+    
+    function switchToLogin() {
+      loginTab.classList.add('active');
+      registerTab.classList.remove('active');
+      loginForm.classList.add('active');
+      registerForm.classList.remove('active');
+    }
+    
+    function switchToRegister() {
+      registerTab.classList.add('active');
+      loginTab.classList.remove('active');
+      registerForm.classList.add('active');
+      loginForm.classList.remove('active');
+    }
+    
+    loginTab.addEventListener('click', switchToLogin);
+    registerTab.addEventListener('click', switchToRegister);
+    showRegister.addEventListener('click', switchToRegister);
+    showLogin.addEventListener('click', switchToLogin);
+    
+    // 表单验证
+    document.getElementById('login-submit').addEventListener('click', function() {
+      let isValid = true;
+      
+      const username = document.getElementById('login-username').value;
+      const password = document.getElementById('login-password').value;
+      
+      // 验证用户名
+      const usernameGroup = document.getElementById('login-username').parentElement;
+      if (!username) {
+        usernameGroup.classList.add('error');
+        isValid = false;
+      } else {
+        usernameGroup.classList.remove('error');
+      }
+      
+      // 验证密码
+      const passwordGroup = document.getElementById('login-password').parentElement;
+      if (password.length < 6) {
+        passwordGroup.classList.add('error');
+        isValid = false;
+      } else {
+        passwordGroup.classList.remove('error');
+      }
+      
+      if (isValid) {
+        // 登录成功逻辑
+        alert('登录成功！即将跳转到首页');
+        window.location.href = '/';
+      }
+    });
+    
+    document.getElementById('register-submit').addEventListener('click', function() {
+      let isValid = true;
+      
+      const name = document.getElementById('register-name').value;
+      const phone = document.getElementById('register-phone').value;
+      const email = document.getElementById('register-email').value;
+      const password = document.getElementById('register-password').value;
+      const confirm = document.getElementById('register-confirm').value;
+      const agree = document.getElementById('agree-terms').checked;
+      
+      // 验证姓名
+      const nameGroup = document.getElementById('register-name').parentElement;
+      if (!name) {
+        nameGroup.classList.add('error');
+        isValid = false;
+      } else {
+        nameGroup.classList.remove('error');
+      }
+      
+      // 验证手机号
+      const phoneGroup = document.getElementById('register-phone').parentElement;
+      const phoneRegex = /^1[3-9]\d{9}$/;
+      if (!phoneRegex.test(phone)) {
+        phoneGroup.classList.add('error');
+        isValid = false;
+      } else {
+        phoneGroup.classList.remove('error');
+      }
+      
+      // 验证邮箱
+      const emailGroup = document.getElementById('register-email').parentElement;
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        emailGroup.classList.add('error');
+        isValid = false;
+      } else {
+        emailGroup.classList.remove('error');
+      }
+      
+      // 验证密码
+      const passwordGroup = document.getElementById('register-password').parentElement;
+      if (password.length < 6) {
+        passwordGroup.classList.add('error');
+        isValid = false;
+      } else {
+        passwordGroup.classList.remove('error');
+      }
+      
+      // 验证确认密码
+      const confirmGroup = document.getElementById('register-confirm').parentElement;
+      if (confirm !== password) {
+        confirmGroup.classList.add('error');
+        isValid = false;
+      } else {
+        confirmGroup.classList.remove('error');
+      }
+      
+      // 验证同意条款
+      const agreeGroup = document.getElementById('agree-terms').parentElement.parentElement;
+      if (!agree) {
+        agreeGroup.classList.add('error');
+        isValid = false;
+      } else {
+        agreeGroup.classList.remove('error');
+      }
+      
+      if (isValid) {
+        // 注册成功逻辑
+        alert('注册成功！请登录');
+        switchToLogin();
+      }
+    });
+    
+    // 输入框实时验证
+    document.getElementById('login-username').addEventListener('input', function() {
+      const group = this.parentElement;
+      if (this.value) {
+        group.classList.remove('error');
+      }
+    });
+    
+    document.getElementById('login-password').addEventListener('input', function() {
+      const group = this.parentElement;
+      if (this.value.length >= 6) {
+        group.classList.remove('error');
+      }
+    });
+    
+    document.getElementById('register-name').addEventListener('input', function() {
+      const group = this.parentElement;
+      if (this.value) {
+        group.classList.remove('error');
+      }
+    });
+    
+    document.getElementById('register-phone').addEventListener('input', function() {
+      const group = this.parentElement;
+      const phoneRegex = /^1[3-9]\d{9}$/;
+      if (phoneRegex.test(this.value)) {
+        group.classList.remove('error');
+      }
+    });
+    
+    document.getElementById('register-email').addEventListener('input', function() {
+      const group = this.parentElement;
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (emailRegex.test(this.value)) {
+        group.classList.remove('error');
+      }
+    });
+    
+    document.getElementById('register-password').addEventListener('input', function() {
+      const group = this.parentElement;
+      if (this.value.length >= 6) {
+        group.classList.remove('error');
+      }
+    });
+    
+    document.getElementById('register-confirm').addEventListener('input', function() {
+      const group = this.parentElement;
+      const password = document.getElementById('register-password').value;
+      if (this.value === password) {
+        group.classList.remove('error');
+      }
+    });
+    
+    document.getElementById('agree-terms').addEventListener('change', function() {
+      const group = this.parentElement.parentElement;
+      if (this.checked) {
+        group.classList.remove('error');
+      }
+    });
+  </script>
+</body>
+</html>  

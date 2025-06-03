@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>膳食中医 - 专家咨询</title>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <style>
+    /* 复用全站基础样式 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Noto Serif SC', serif;
+    }
+
+    body {
+      background: #f5f2eb;
+      line-height: 1.6;
+      color: #3c2a21;
+    }
+
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(245, 242, 235, 0.95);
+      padding: 1rem 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.1);
+      z-index: 1000;
+    }
+
+    .header .logo {
+      display: flex;
+      align-items: center;
+      color: #8b4513;
+      text-decoration: none;
+    }
+
+    .header .logo i {
+      font-size: 2.2rem;
+      margin-right: 0.5rem;
+    }
+
+    .header .nav a {
+      margin-left: 2rem;
+      font-size: 1.1rem;
+      color: #3c2a21;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .header .nav a:hover {
+      color: #228b22;
+    }
+
+    .footer {
+      background: #3c2a21;
+      color: white;
+      padding: 3rem 4%;
+      margin-top: 3rem;
+    }
+
+    /* 专家咨询页面专属样式 */
+    .main-container {
+      max-width: 1200px;
+      margin: 8rem auto 2rem;
+      padding: 0 4%;
+    }
+
+    .section-title {
+      font-size: 2.2rem;
+      color: #8b4513;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid #228b22;
+      padding-left: 1rem;
+    }
+
+    /* 专家列表区域 */
+    .experts-container {
+      background: white;
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.05);
+      margin-bottom: 3rem;
+    }
+
+    .expert-card {
+      display: grid;
+      grid-template-columns: 1fr 3fr;
+      gap: 2rem;
+      padding: 1.5rem 0;
+      border-bottom: 1px dashed #ddd;
+    }
+
+    .expert-card:last-child {
+      border-bottom: none;
+    }
+
+    .expert-avatar {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 50%;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .expert-info h3 {
+      font-size: 1.5rem;
+      color: #8b4513;
+      margin-bottom: 0.5rem;
+    }
+
+    .expert-title {
+      color: #228b22;
+      font-weight: 500;
+      margin-bottom: 0.8rem;
+    }
+
+    .expert-desc {
+      color: #666;
+      margin-bottom: 1rem;
+    }
+
+    .appointment-btn {
+      display: inline-block;
+      background: #228b22;
+      color: white;
+      padding: 0.5rem 1.5rem;
+      border-radius: 5px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    .appointment-btn:hover {
+      background: #1a6d1a;
+    }
+
+    /* 预约表单区域 */
+    .appointment-container {
+      background: white;
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.05);
+      transition: all 0.5s ease;
+    }
+
+    .appointment-container form {
+      transition: opacity 0.3s ease;
+    }
+    
+    .appointment-container.submitted form {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    .form-group textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .submit-btn {
+      background: #8b4513;
+      color: white;
+      padding: 0.8rem 2rem;
+      border: none;
+      border-radius: 5px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .submit-btn:hover {
+      background: #6a340f;
+    }
+
+    /* 预约成功页面样式 */
+    .success-message {
+      display: none;
+      text-align: center;
+      padding: 3rem 0;
+      opacity: 0;
+      transform: scale(0.95);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    
+    .success-message.active {
+      display: block;
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .success-icon {
+      font-size: 5rem;
+      color: #228b22;
+      margin-bottom: 2rem;
+      animation: pulse 1.5s ease-in-out;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    .success-title {
+      font-size: 2rem;
+      color: #8b4513;
+      margin-bottom: 1rem;
+    }
+
+    .success-desc {
+      color: #666;
+      margin-bottom: 2rem;
+    }
+    
+    .highlight {
+      color: #228b22;
+      font-weight: bold;
+    }
+
+    .appointment-card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      margin: 2rem auto;
+      max-width: 500px;
+    }
+    
+    .card-header {
+      padding: 1rem;
+      background: #f5f2eb;
+      border-radius: 10px 10px 0 0;
+    }
+    
+    .card-body {
+      padding: 1.5rem;
+    }
+    
+    .detail-row {
+      display: flex;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .detail-row:last-child {
+      border-bottom: none;
+    }
+    
+    .detail-label {
+      font-weight: 500;
+      color: #8b4513;
+      min-width: 100px;
+    }
+
+    .action-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .action-btn {
+      padding: 0.8rem 2rem;
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: background 0.3s;
+    }
+
+    .btn-primary {
+      background: #8b4513;
+      color: white;
+    }
+
+    .btn-secondary {
+      background: #f5f2eb;
+      color: #8b4513;
+      border: 1px solid #8b4513;
+    }
+    
+    .additional-options {
+      margin-top: 3rem;
+      padding: 2rem;
+      background: #f5f2eb;
+      border-radius: 10px;
+    }
+    
+    .share-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+    
+    .share-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #8b4513;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    
+    .share-btn:hover {
+      background: #6a340f;
+    }
+    
+    .faq-section ul {
+      list-style: none;
+      margin-top: 1rem;
+    }
+    
+    .faq-section li {
+      margin-bottom: 0.5rem;
+    }
+    
+    .faq-section a {
+      color: #228b22;
+      text-decoration: none;
+    }
+    
+    .faq-section a:hover {
+      text-decoration: underline;
+    }
+
+    /* 响应式设计 */
+    @media (max-width: 991px) {
+      .header .nav {
+        display: none;
+      }
+      
+      .expert-card {
+        grid-template-columns: 1fr;
+      }
+      
+      .expert-avatar {
+        margin: 0 auto;
+      }
+      
+      .expert-info {
+        text-align: center;
+      }
+      
+      .action-buttons {
+        flex-direction: column;
+      }
+      
+      .action-btn {
+        padding: 1rem;
+        font-size: 1.1rem;
+      }
+      
+      .appointment-card {
+        width: 100%;
+      }
+      
+      .share-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 头部导航栏（与全站一致） -->
+  <header class="header">
+    <a href="首页.html" class="logo">
+      <i class="fa fa-leaf"></i>
+      膳食中医
+    </a>
+    <nav class="nav">
+      <a href="首页.html">首页</a>
+      <a href="养生课堂.html">养生课堂</a>
+      <a href="专家咨询.html" class="active">专家咨询</a> <!-- 当前页面标记 -->
+      <a href="订购膳食.html">订购膳食</a>
+      <a href="登录.html">登录/注册</a>
+    </nav>
+  </header>
+
+  <!-- 主内容区域 -->
+  <main class="main-container">
+    <h2 class="section-title">专家咨询</h2>
+    
+    <!-- 专家列表 -->
+    <section class="experts-container">
+      <h3 class="widget-title">中医专家团队</h3>
+      
+      <div class="expert-card">
+        <div class="expert-image">
+          <img src="https://tse4-mm.cn.bing.net/th/id/OIP-C.8ZZJtrug0-jgvx8JWlRJjQAAAA?rs=1&pid=ImgDetMain" alt="张教授" class="expert-avatar">
+        </div>
+        <div class="expert-info">
+          <h3>张教授</h3>
+          <p class="expert-title">主任医师 | 国医大师</p>
+          <p class="expert-desc">
+            从事中医临床工作40余年，擅长脾胃病、失眠、更年期综合征等疾病的中西医结合治疗，尤其在食疗养生方面有深厚造诣。
+          </p>
+          <a href="#appointment" class="appointment-btn">立即预约</a>
+        </div>
+      </div>
+      
+      <div class="expert-card">
+        <div class="expert-image">
+          <img src="https://huacheng.gz-cmc.com/upload/news/image/2022/02/08/de55f01f3f63420484643690d3c4c166.jpg" alt="李医生" class="expert-avatar">
+        </div>
+        <div class="expert-info">
+          <h3>李医生</h3>
+          <p class="expert-title">副主任医师 | 针灸专家</p>
+          <p class="expert-desc">
+            专注于中医针灸与食疗结合的养生方法，擅长颈椎病、腰腿痛、慢性疲劳综合征等疾病的治疗，提倡"药食同源"的健康理念。
+          </p>
+          <a href="#appointment" class="appointment-btn">立即预约</a>
+        </div>
+      </div>
+      
+      <div class="expert-card">
+        <div class="expert-image">
+          <img src="https://img95.699pic.com/photo/50191/7932.jpg_wh860.jpg" alt="王医生" class="expert-avatar">
+        </div>
+        <div class="expert-info">
+          <h3>王医生</h3>
+          <p class="expert-title">主治医师 | 中医妇科专家</p>
+          <p class="expert-desc">
+            专攻女性健康领域，擅长月经不调、产后调理、乳腺疾病等妇科问题的中医治疗，结合食疗方案帮助女性调理体质。
+          </p>
+          <a href="#appointment" class="appointment-btn">立即预约</a>
+        </div>
+      </div>
+    </section>
+    
+    <!-- 预约表单区域 -->
+    <section id="appointment" class="appointment-container">
+      <h3 class="widget-title">预约咨询</h3>
+      
+      <!-- 预约表单 -->
+      <form id="appointmentForm">
+        <div class="form-group">
+          <label for="name">姓名</label>
+          <input type="text" id="name" placeholder="请输入您的姓名" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="phone">手机号码</label>
+          <input type="tel" id="phone" placeholder="请输入您的手机号码" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="expert">选择专家</label>
+          <select id="expert" required>
+            <option value="">请选择咨询专家</option>
+            <option value="张教授">张教授 - 脾胃病专家</option>
+            <option value="李医生">李医生 - 针灸专家</option>
+            <option value="王医生">王医生 - 妇科专家</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="date">预约日期</label>
+          <input type="date" id="date" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="time">预约时间</label>
+          <select id="time" required>
+            <option value="">请选择咨询时间</option>
+            <option value="09:00">09:00 - 10:00</option>
+            <option value="10:00">10:00 - 11:00</option>
+            <option value="14:00">14:00 - 15:00</option>
+            <option value="15:00">15:00 - 16:00</option>
+            <option value="16:00">16:00 - 17:00</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="symptom">症状描述</label>
+          <textarea id="symptom" placeholder="请简要描述您的健康问题或咨询需求"></textarea>
+        </div>
+        
+        <button type="submit" class="submit-btn">提交预约</button>
+      </form>
+      
+      <!-- 预约成功消息 -->
+      <div class="success-message" id="successMessage">
+        <div class="success-icon">
+          <i class="fa fa-check-circle"></i>
+        </div>
+        <h3 class="success-title">预约提交成功！</h3>
+        <p class="success-desc">
+          我们的工作人员将在<span class="highlight">24小时内</span>与您联系确认详情
+        </p>
+        
+        <div class="appointment-card">
+          <div class="card-header">
+            <h4>预约详情</h4>
+          </div>
+          <div class="card-body">
+            <div class="detail-row">
+              <span class="detail-label">预约人：</span>
+              <span id="detailName">-</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">预约专家：</span>
+              <span id="detailExpert">-</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">预约时间：</span>
+              <span id="detailDateTime">-</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">预约编号：</span>
+              <span id="appointmentId">-</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="action-buttons">
+          <a href="#" class="action-btn btn-primary" onclick="window.print()">
+            <i class="fa fa-print"></i> 打印预约单
+          </a>
+          <a href="/" class="action-btn btn-secondary">
+            <i class="fa fa-home"></i> 返回首页
+          </a>
+          <a href="专家咨询.html" class="action-btn btn-secondary">
+            <i class="fa fa-user-md"></i> 查看更多专家
+          </a>
+        </div>
+        
+        <div class="additional-options">
+          <h4>分享预约信息</h4>
+          <div class="share-buttons">
+            <a href="#" class="share-btn"><i class="fa fa-weixin"></i></a>
+            <a href="#" class="share-btn"><i class="fa fa-sms"></i></a>
+            <a href="#" class="share-btn"><i class="fa fa-email"></i></a>
+          </div>
+          
+          <div class="faq-section">
+            <h4>常见问题</h4>
+            <ul>
+              <li><a href="#">如何取消预约？</a></li>
+              <li><a href="#">预约后多久能得到回复？</a></li>
+              <li><a href="#">可以更换预约专家吗？</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 页脚（与全站一致） -->
+  <footer class="footer">
+    <div class="container">
+      <p>© 2025 膳食中医 版权所有 | 京ICP备12345678号</p>
+      <p>联系我们：400-888-8888 | info@shanshizhongyi.com</p>
+    </div>
+  </footer>
+
+  <script>
+    // 表单提交处理
+    document.getElementById('appointmentForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // 表单验证
+      const name = document.getElementById('name').value;
+      const phone = document.getElementById('phone').value;
+      const expert = document.getElementById('expert').value;
+      const date = document.getElementById('date').value;
+      const time = document.getElementById('time').value;
+      
+      // 简单验证示例
+      if (!name || !phone || !expert || !date || !time) {
+        alert('请填写所有必填字段');
+        return;
+      }
+      
+      // 手机号格式验证
+      const phoneRegex = /^1[3-9]\d{9}$/;
+      if (!phoneRegex.test(phone)) {
+        alert('请输入有效的手机号码');
+        return;
+      }
+      
+      // 日期验证（确保选择的是未来日期）
+      const selectedDate = new Date(date);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      
+      if (selectedDate < today) {
+        alert('请选择未来的日期');
+        return;
+      }
+      
+      // 获取表单数据
+      // 格式化日期时间
+      const formattedDate = new Date(date).toLocaleDateString('zh-CN');
+      const formattedTime = time.replace(':', ':00');
+      
+      // 生成随机预约号
+      const appointmentId = 'YZ' + Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
+      
+      // 更新成功消息中的预约详情
+      document.getElementById('detailName').textContent = name;
+      document.getElementById('detailExpert').textContent = expert;
+      document.getElementById('detailDateTime').textContent = `${formattedDate} ${formattedTime}`;
+      document.getElementById('appointmentId').textContent = appointmentId;
+      
+      // 添加提交状态类
+      const container = document.getElementById('appointment');
+      container.classList.add('submitted');
+      
+      // 延迟显示成功消息以确保动画完成
+      setTimeout(() => {
+        document.getElementById('successMessage').classList.add('active');
+      }, 300);
+      
+      // 平滑滚动到成功消息
+      document.getElementById('appointment').scrollIntoView({ behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>

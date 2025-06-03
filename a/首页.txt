@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>膳食中医 - 首页</title>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <style>
+    /* 基础样式 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Noto Serif SC', serif;
+    }
+
+    body {
+      background: #f5f2eb;
+      line-height: 1.6;
+      color: #3c2a21;
+    }
+
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(245, 242, 235, 0.95);
+      padding: 1rem 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.1);
+      z-index: 1000;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      color: #8b4513;
+      text-decoration: none;
+    }
+
+    .logo i {
+      font-size: 2.2rem;
+      margin-right: 0.5rem;
+    }
+
+    .nav a {
+      margin-left: 2rem;
+      font-size: 1.1rem;
+      color: #3c2a21;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .nav a:hover {
+      color: #228b22;
+    }
+
+    /* 轮播图样式 */
+    .carousel {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .carousel-slides {
+      display: flex;
+      height: 100%;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .carousel-slide {
+      min-width: 100%;
+      background-position: center;
+      background-size: cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* 轮播图片 */
+    .carousel-slide:nth-child(1) {
+      background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://img95.699pic.com/photo/60095/9506.jpg_wh860.jpg');
+    }
+    .carousel-slide:nth-child(2) {
+      background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://img95.699pic.com/photo/40180/1667.jpg_wh300.jpg');
+    }
+    .carousel-slide:nth-child(3) {
+      background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://img95.699pic.com/photo/50163/0708.jpg_wh300.jpg!/fh/300/quality/90');
+    }
+
+    /* 轮播控制按钮 */
+    .carousel-control {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.5);
+      color: white;
+      border: none;
+      padding: 1rem;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    .carousel-control.prev {
+      left: 1rem;
+    }
+
+    .carousel-control.next {
+      right: 1rem;
+    }
+
+    /* 轮播指示器 */
+    .carousel-indicators {
+      position: absolute;
+      bottom: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+    }
+
+    .carousel-indicator {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.5);
+      margin: 0 5px;
+      cursor: pointer;
+    }
+
+    .carousel-indicator.active {
+      background: white;
+    }
+
+    /* 首屏内容 */
+    .hero-content {
+      padding: 2rem;
+      text-align: center;
+      color: white;
+      z-index: 5;
+    }
+
+    .hero-title {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .hero-subtitle {
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+      color: #f5f2eb;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+      background: #8b4513;
+      color: white;
+      text-decoration: none;
+      font-size: 1.1rem;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
+
+    .cta-button:hover {
+      background: #6a340f;
+    }
+
+    /* 响应式设计 */
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 2.5rem;
+      }
+
+      .nav {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 头部导航栏 -->
+  <header class="header">
+    <a href="/" class="logo">
+      <i class="fa fa-leaf"></i>
+      膳食中医
+    </a>
+    <nav class="nav">
+      <a href="首页.html" class="active">首页</a>
+      <!-- 已修改此处的href属性 -->
+      <a href="/health-class-detail.html">养生课堂</a>
+      <a href="专家咨询.html">专家咨询</a>
+      <a href="订购膳食.html.html">订购膳食</a>
+      <a href="登录.html">登录/注册</a>
+    </nav>
+  </header>
+
+  <!-- 轮播图区域 -->
+  <section class="carousel" id="carousel">
+    <div class="carousel-slides" id="carouselSlides">
+      <div class="carousel-slide">
+        <div class="hero-content">
+          <h1 class="hero-title">专注中医膳食养生</h1>
+          <p class="hero-subtitle">提供个性化中医养生方案</p>
+          <a href="订购膳食.html.html" class="cta-button">立即定制膳食</a>
+        </div>
+      </div>
+      <div class="carousel-slide">
+        <div class="hero-content">
+          <h1 class="hero-title">传统中医智慧</h1>
+          <p class="hero-subtitle">结合现代营养学，科学养生</p>
+          <a href="养生课堂.html" class="cta-button">了解更多</a>
+        </div>
+      </div>
+      <div class="carousel-slide">
+        <div class="hero-content">
+          <h1 class="hero-title">专业医师团队</h1>
+          <p class="hero-subtitle">为您提供一对一健康咨询服务</p>
+          <a href="专家咨询.html" class="cta-button">在线咨询</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 轮播控制按钮 -->
+    <button class="carousel-control prev" onclick="prevSlide()"><i class="fa fa-chevron-left"></i></button>
+    <button class="carousel-control next" onclick="nextSlide()"><i class="fa fa-chevron-right"></i></button>
+
+    <!-- 轮播指示器 -->
+    <div class="carousel-indicators" id="carouselIndicators">
+      <button class="carousel-indicator active" onclick="goToSlide(0)"></button>
+      <button class="carousel-indicator" onclick="goToSlide(1)"></button>
+      <button class="carousel-indicator" onclick="goToSlide(2)"></button>
+    </div>
+  </section>
+
+  <!-- 页脚（保留必要信息） -->
+  <footer class="footer" style="background: #3c2a21; color: white; padding: 1rem 4%; text-align: center;">
+    <p>© 2025 膳食中医 版权所有 | 京ICP备12345678号</p>
+  </footer>
+
+  <script>
+    // 轮播图功能实现
+    let currentSlide = 0;
+    const slides = document.getElementById('carouselSlides');
+    const indicators = document.querySelectorAll('.carousel-indicator');
+    const slideCount = document.querySelectorAll('.carousel-slide').length;
+
+    // 初始化轮播图
+    function initCarousel() {
+      // 设置自动轮播
+      setInterval(nextSlide, 5000);
+    }
+
+    // 下一张幻灯片
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % slideCount;
+      updateSlide();
+    }
+
+    // 上一张幻灯片
+    function prevSlide() {
+      currentSlide = (currentSlide - 1 + slideCount) % slideCount;
+      updateSlide();
+    }
+
+    // 跳转到指定幻灯片
+    function goToSlide(index) {
+      currentSlide = index;
+      updateSlide();
+    }
+
+    // 更新幻灯片显示
+    function updateSlide() {
+      // 移动幻灯片
+      slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+      
+      // 更新指示器状态
+      indicators.forEach((indicator, index) => {
+        if (index === currentSlide) {
+          indicator.classList.add('active');
+        } else {
+          indicator.classList.remove('active');
+        }
+      });
+    }
+
+    // 页面加载完成后初始化轮播图
+    window.addEventListener('load', initCarousel);
+  </script>
+</body>
+</html>

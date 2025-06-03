@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+  <html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>膳食中医 - 养生课堂</title>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+      /* 复用全站基础样式 */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Noto Serif SC', serif;
+      }
+
+      body {
+        background: #f5f2eb;
+        line-height: 1.6;
+        color: #3c2a21;
+      }
+
+      .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: rgba(245, 242, 235, 0.95);
+        padding: 1rem 8%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.1);
+        z-index: 1000;
+      }
+
+      .header .logo {
+        display: flex;
+        align-items: center;
+        color: #8b4513;
+        text-decoration: none;
+      }
+
+      .header .logo i {
+        font-size: 2.2rem;
+        margin-right: 0.5rem;
+      }
+
+      .header .nav a {
+        margin-left: 2rem;
+        font-size: 1.1rem;
+        color: #3c2a21;
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+
+      .header .nav a:hover {
+        color: #228b22;
+      }
+
+      .footer {
+        background: #3c2a21;
+        color: white;
+        padding: 3rem 4%;
+        margin-top: 3rem;
+      }
+
+      /* 养生课堂详情页专属样式 */
+      .main-container {
+        max-width: 1200px;
+        margin: 8rem auto 2rem;
+        padding: 0 4%;
+      }
+
+      .section-title {
+        font-size: 2.2rem;
+        color: #8b4513;
+        margin-bottom: 1.5rem;
+        border-left: 4px solid #228b22;
+        padding-left: 1rem;
+      }
+
+      .article-container {
+        background: white;
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.05);
+        margin-bottom: 3rem;
+      }
+
+      .article-header {
+        margin-bottom: 2rem;
+      }
+
+      .article-title {
+        font-size: 2rem;
+        color: #8b4513;
+        margin-bottom: 1rem;
+      }
+
+      .article-meta {
+        color: #666;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+      }
+
+      .article-meta span {
+        margin-right: 1.5rem;
+      }
+
+      .article-content {
+        line-height: 1.8;
+        margin-bottom: 2rem;
+      }
+
+      .article-content h3 {
+        font-size: 1.5rem;
+        color: #8b4513;
+        margin: 1.5rem 0 1rem;
+      }
+
+      .article-content p {
+        margin-bottom: 1.5rem;
+      }
+
+      .article-content img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+        margin: 1rem 0;
+      }
+
+      .article-content blockquote {
+        background: #f9f7f3;
+        border-left: 4px solid #8b4513;
+        padding: 1rem 1.5rem;
+        margin: 1.5rem 0;
+        font-style: italic;
+      }
+
+      .article-footer {
+        border-top: 1px solid #eee;
+        padding-top: 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .article-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .tag {
+        background: #f5f2eb;
+        color: #8b4513;
+        padding: 0.3rem 1rem;
+        border-radius: 15px;
+        font-size: 0.9rem;
+        text-decoration: none;
+      }
+
+      .share-buttons {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .share-button {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: #8b4513;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        transition: background 0.3s;
+      }
+
+      .share-button:hover {
+        background: #6a340f;
+      }
+
+      /* 相关文章区域 */
+      .related-articles {
+        background: white;
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.05);
+      }
+
+      .related-articles h3 {
+        font-size: 1.5rem;
+        color: #8b4513;
+        margin-bottom: 1.5rem;
+      }
+
+      .related-articles ul {
+        list-style: none;
+      }
+
+      .related-articles li {
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #eee;
+      }
+
+      .related-articles li:last-child {
+        border-bottom: none;
+      }
+
+      .related-articles a {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        color: #3c2a21;
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+
+      .related-articles a:hover {
+        color: #8b4513;
+      }
+
+      .related-articles img {
+        width: 100px;
+        height: 70px;
+        object-fit: cover;
+        border-radius: 5px;
+      }
+
+      .related-articles .article-info {
+        flex: 1;
+      }
+
+      .related-articles .article-title {
+        font-size: 1.1rem;
+        margin-bottom: 0.3rem;
+      }
+
+      .related-articles .article-date {
+        font-size: 0.9rem;
+        color: #666;
+      }
+
+      /* 响应式设计 */
+      @media (max-width: 991px) {
+        .header .nav {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 头部导航栏（与全站一致） -->
+    <header class="header">
+      <a href="首页.html" class="logo">
+        <i class="fa fa-leaf"></i>
+        膳食中医
+      </a>
+      <nav class="nav">
+        <a href="首页.html">首页</a>
+        <a href="养生课堂.html" class="active">养生课堂</a> <!-- 当前页面标记 -->
+        <a href="专家咨询.html">专家咨询</a>
+        <a href="订购膳食.html">订购膳食</a>
+        <a href="登录.html">登录/注册</a>
+      </nav>
+    </header>
+
+    <!-- 主内容区域 -->
+    <main class="main-container">
+      <h2 class="section-title">养生课堂</h2>
+      
+      <!-- 文章详情区域 -->
+      <article class="article-container">
+        <header class="article-header">
+          <h1 class="article-title">四季养生之春季养肝</h1>
+          <div class="article-meta">
+            <span><i class="fa fa-calendar"></i> 2025-03-15</span>
+            <span><i class="fa fa-user"></i> 李医生</span>
+            <span><i class="fa fa-eye"></i> 3,542</span>
+            <span><i class="fa fa-comment"></i> 28</span>
+          </div>
+        </header>
+        
+        <div class="article-content">
+          <p>春季是万物复苏、阳气升发的季节，中医认为"春与肝相应"，春季养生应以养肝为主。肝脏是人体重要的解毒器官，春季养肝不仅能增强肝脏功能，还能为一年的健康打下基础。</p>
+          
+          <img src="https://picsum.photos/800/400?random=1" alt="春季养肝" />
+          
+          <h3>一、春季养肝的重要性</h3>
+          <p>中医理论认为，肝主疏泄，喜条达而恶抑郁，与春季阳气升发的特点相呼应。春季养肝可以调节气机，促进新陈代谢，预防肝病及其他疾病的发生。</p>
+          
+          <blockquote>
+            《黄帝内经》云："春三月，此谓发陈，天地俱生，万物以荣，夜卧早起，广步于庭，被发缓形，以使志生，生而勿杀，予而勿夺，赏而勿罚，此春气之应，养生之道也。"
+          </blockquote>
+          
+          <h3>二、春季养肝的方法</h3>
+          
+          <h4>1. 饮食调理</h4>
+          <p>春季饮食宜清淡，忌油腻、辛辣食物。应多吃一些具有养肝作用的食物：</p>
+          <ul>
+            <li><strong>青色食物</strong>：中医认为"青色入肝"，可多吃菠菜、芹菜、西兰花、青苹果等。</li>
+            <li><strong>温补类食物</strong>：如韭菜、葱、蒜等，有助于升发阳气。</li>
+            <li><strong>酸味食物</strong>：适量食用酸味食物可增强肝功能，但不宜过量，以免影响脾胃。</li>
+            <li><strong>养肝药膳</strong>：可食用一些养肝的药膳，如枸杞猪肝汤、菠菜猪肝汤等。</li>
+          </ul>
+          
+          <img src="https://picsum.photos/800/400?random=2" alt="春季养肝食物" />
+          
+          <h4>2. 起居作息</h4>
+          <p>春季应早睡早起，保证充足的睡眠。睡眠是最好的养肝方法，特别是夜间11点至凌晨3点，是肝经当令的时间，此时应处于深度睡眠状态。</p>
+          
+          <h4>3. 情志调节</h4>
+          <p>肝主情志，情绪波动过大容易伤肝。春季应保持心情舒畅，避免抑郁、愤怒等不良情绪。可通过散步、踏青、听音乐等方式调节情绪。</p>
+          
+          <h4>4. 运动锻炼</h4>
+          <p>春季应适当进行户外活动，如散步、慢跑、太极拳、瑜伽等，以促进气血流通，增强肝脏功能。</p>
+          
+          <h3>三、春季养肝的禁忌</h3>
+          <p>春季养肝应注意以下禁忌：</p>
+          <ul>
+            <li>避免过度饮酒，酒精会加重肝脏负担。</li>
+            <li>不宜过度劳累，应注意休息。</li>
+            <li>避免长时间用眼，中医认为"久视伤肝"。</li>
+            <li>少吃生冷食物，以免损伤脾胃，影响肝脏功能。</li>
+          </ul>
+          
+          <h3>四、春季养肝食谱推荐</h3>
+          <p>以下是几个适合春季养肝的食谱：</p>
+          
+          <h4>1. 枸杞猪肝汤</h4>
+          <p><strong>材料</strong>：猪肝200克，枸杞30克，红枣10颗，姜片、盐适量。</p>
+          <p><strong>做法</strong>：猪肝切片，用清水浸泡去血水；枸杞、红枣洗净；锅中加水烧开，放入姜片、枸杞、红枣煮10分钟，再放入猪肝煮熟，加盐调味即可。</p>
+          <p><strong>功效</strong>：补肝明目，养血安神。</p>
+          
+          <h4>2. 菠菜猪肝汤</h4>
+          <p><strong>材料</strong>：菠菜200克，猪肝150克，姜片、盐适量。</p>
+          <p><strong>做法</strong>：菠菜洗净切段，焯水去草酸；猪肝切片，用清水浸泡去血水；锅中加水烧开，放入姜片、猪肝煮熟，再放入菠菜煮1分钟，加盐调味即可。</p>
+          <p><strong>功效</strong>：养肝补血，滋阴润燥。</p>
+        </div>
+        
+        <footer class="article-footer">
+          <div class="article-tags">
+            <a href="#" class="tag">春季养生</a>
+            <a href="#" class="tag">养肝</a>
+            <a href="#" class="tag">中医养生</a>
+            <a href="#" class="tag">四季养生</a>
+          </div>
+          
+          <div class="share-buttons">
+            <a href="#" class="share-button"><i class="fa fa-weixin"></i></a>
+            <a href="#" class="share-button"><i class="fa fa-weibo"></i></a>
+            <a href="#" class="share-button"><i class="fa fa-qq"></i></a>
+            <a href="#" class="share-button"><i class="fa fa-link"></i></a>
+          </div>
+        </footer>
+      </article>
+      
+      <!-- 相关文章区域 -->
+      <section class="related-articles">
+        <h3>相关推荐</h3>
+        <ul>
+          <li>
+            <a href="#">
+              <img src="https://picsum.photos/200/150?random=3" alt="夏季养心" />
+              <div class="article-info">
+                <h4 class="article-title">四季养生之夏季养心</h4>
+                <p class="article-date"><i class="fa fa-calendar"></i> 2025-05-20</p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <img src="https://picsum.photos/200/150?random=4" alt="秋季养肺" />
+              <div class="article-info">
+                <h4 class="article-title">四季养生之秋季养肺</h4>
+                <p class="article-date"><i class="fa fa-calendar"></i> 2025-09-10</p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <img src="https://picsum.photos/200/150?random=5" alt="冬季养肾" />
+              <div class="article-info">
+                <h4 class="article-title">四季养生之冬季养肾</h4>
+                <p class="article-date"><i class="fa fa-calendar"></i> 2025-12-05</p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <img src="https://picsum.photos/200/150?random=6" alt="中医食疗" />
+              <div class="article-info">
+                <h4 class="article-title">中医食疗的基本原则</h4>
+                <p class="article-date"><i class="fa fa-calendar"></i> 2025-04-18</p>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </section>
+    </main>
+
+    <!-- 页脚（与全站一致） -->
+    <footer class="footer">
+      <div class="container">
+        <p>© 2025 膳食中医 版权所有 | 京ICP备12345678号</p>
+        <p>联系我们：400-888-8888 | info@shanshizhongyi.com</p>
+      </div>
+    </footer>
+
+    <script>
+      // 平滑滚动
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          
+          document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+          });
+        });
+      });
+    </script>
+  </body>
+  </html>
+  

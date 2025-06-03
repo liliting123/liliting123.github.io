@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>膳食中医 - 膳食订购</title>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <style>
+    /* 复用全站基础样式 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Noto Serif SC', serif;
+    }
+
+    body {
+      background: #f5f2eb;
+      line-height: 1.6;
+      color: #3c2a21;
+    }
+
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(245, 242, 235, 0.95);
+      padding: 1rem 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.1);
+      z-index: 1000;
+    }
+
+    .header .logo {
+      display: flex;
+      align-items: center;
+      color: #8b4513;
+      text-decoration: none;
+    }
+
+    .header .logo i {
+      font-size: 2.2rem;
+      margin-right: 0.5rem;
+    }
+
+    .header .nav a {
+      margin-left: 2rem;
+      font-size: 1.1rem;
+      color: #3c2a21;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .header .nav a:hover {
+      color: #228b22;
+    }
+
+    .footer {
+      background: #3c2a21;
+      color: white;
+      padding: 3rem 4%;
+      margin-top: 3rem;
+    }
+
+    /* 膳食订购页面专属样式 */
+    .main-container {
+      max-width: 1200px;
+      margin: 8rem auto 2rem;
+      padding: 0 4%;
+    }
+
+    .section-title {
+      font-size: 2.2rem;
+      color: #8b4513;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid #228b22;
+      padding-left: 1rem;
+    }
+
+    /* 膳食套餐区域 */
+    .diet-packages {
+      background: white;
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.05);
+      margin-bottom: 3rem;
+    }
+
+    .package-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .diet-package {
+      background: #f9f7f3;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+
+    .diet-package:hover {
+      transform: translateY(-5px);
+    }
+
+    .package-image {
+      height: 200px;
+      overflow: hidden;
+    }
+
+    .package-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .package-content {
+      padding: 1.5rem;
+    }
+
+    .package-title {
+      font-size: 1.5rem;
+      color: #8b4513;
+      margin-bottom: 0.5rem;
+    }
+
+    .package-desc {
+      color: #666;
+      margin-bottom: 1rem;
+    }
+
+    .package-price {
+      font-size: 1.2rem;
+      color: #228b22;
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+    }
+
+    .select-package {
+      display: inline-block;
+      background: #8b4513;
+      color: white;
+      padding: 0.5rem 1.5rem;
+      border-radius: 5px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    .select-package:hover {
+      background: #6a340f;
+    }
+
+    /* 定制膳食区域 */
+    .custom-diet {
+      background: white;
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.05);
+      margin-bottom: 3rem;
+    }
+
+    .custom-diet h3 {
+      font-size: 1.8rem;
+      color: #8b4513;
+      margin-bottom: 1.5rem;
+    }
+
+    /* 订购表单区域 */
+    .order-container {
+      background: white;
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.05);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    .form-group textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .submit-btn {
+      background: #8b4513;
+      color: white;
+      padding: 0.8rem 2rem;
+      border: none;
+      border-radius: 5px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .submit-btn:hover {
+      background: #6a340f;
+    }
+
+    /* 订购成功页面样式 */
+    .success-message {
+      display: none;
+      text-align: center;
+      padding: 3rem 0;
+      opacity: 0;
+      transform: scale(0.95);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    
+    .success-message.active {
+      display: block;
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .success-icon {
+      font-size: 5rem;
+      color: #228b22;
+      margin-bottom: 2rem;
+      animation: pulse 1.5s ease-in-out;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    .success-title {
+      font-size: 2rem;
+      color: #8b4513;
+      margin-bottom: 1rem;
+    }
+
+    .success-desc {
+      color: #666;
+      margin-bottom: 2rem;
+    }
+    
+    .highlight {
+      color: #228b22;
+      font-weight: bold;
+    }
+
+    .order-card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      margin: 2rem auto;
+      max-width: 500px;
+    }
+    
+    .card-header {
+      padding: 1rem;
+      background: #f5f2eb;
+      border-radius: 10px 10px 0 0;
+    }
+    
+    .card-body {
+      padding: 1.5rem;
+    }
+    
+    .detail-row {
+      display: flex;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .detail-row:last-child {
+      border-bottom: none;
+    }
+    
+    .detail-label {
+      font-weight: 500;
+      color: #8b4513;
+      min-width: 120px;
+    }
+
+    .action-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .action-btn {
+      padding: 0.8rem 2rem;
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: background 0.3s;
+    }
+
+    .btn-primary {
+      background: #8b4513;
+      color: white;
+    }
+
+    .btn-secondary {
+      background: #f5f2eb;
+      color: #8b4513;
+      border: 1px solid #8b4513;
+    }
+    
+    /* 套餐详情模态框 */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.5);
+    }
+
+    .modal-content {
+      background-color: #f9f7f3;
+      margin: 5% auto;
+      padding: 2rem;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 800px;
+      position: relative;
+    }
+
+    .close {
+      color: #aaa;
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: #8b4513;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .package-detail {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    .detail-image {
+      flex: 1 1 300px;
+    }
+
+    .detail-image img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+
+    .detail-info {
+      flex: 1 1 400px;
+    }
+
+    .detail-title {
+      font-size: 2rem;
+      color: #8b4513;
+      margin-bottom: 1rem;
+    }
+
+    .detail-desc {
+      color: #666;
+      margin-bottom: 1.5rem;
+    }
+
+    .detail-price {
+      font-size: 1.5rem;
+      color: #228b22;
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+    }
+
+    /* 多点多优惠区域 */
+    .discount-table {
+      margin-bottom: 2rem;
+      width: 100%;
+    }
+
+    .discount-table th,
+    .discount-table td {
+      padding: 0.5rem;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .discount-table th {
+      background-color: #f5f2eb;
+      color: #8b4513;
+    }
+
+    .quantity-selector {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .quantity-btn {
+      width: 30px;
+      height: 30px;
+      background: #8b4513;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .quantity-btn:hover {
+      background: #6a340f;
+    }
+
+    .quantity-input {
+      width: 60px;
+      text-align: center;
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
+    .total-price {
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .total-price span {
+      color: #228b22;
+      font-weight: bold;
+    }
+
+    /* 响应式设计 */
+    @media (max-width: 991px) {
+      .header .nav {
+        display: none;
+      }
+      
+      .package-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .package-detail {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 头部导航栏（与全站一致） -->
+  <header class="header">
+    <a href="/" class="logo">
+      <i class="fa fa-leaf"></i>
+      膳食中医
+    </a>
+    <nav class="nav">
+      <a href="首页.html">首页</a>
+      <a href="养生课堂.html">养生课堂</a>
+      <a href="专家咨询.html">专家咨询</a>
+      <a href="订购膳食.html.html" class="active">订购膳食</a> <!-- 当前页面标记 -->
+      <a href="登录.html">登录/注册</a>
+    </nav>
+  </header>
+
+  <!-- 主内容区域 -->
+  <main class="main-container">
+    <h2 class="section-title">膳食订购</h2>
+    
+    <!-- 膳食套餐区域 -->
+    <section class="diet-packages">
+      <h3 class="widget-title">精选膳食套餐</h3>
+      
+      <div class="package-grid">
+        <div class="diet-package" data-package-id="1">
+          <div class="package-image">
+            <img src="https://ts1.tc.mm.bing.net/th/id/R-C.7802af0641bdc5423bac85fa7f921d3e?rik=YsMzBAyUP%2bZ5Kw&riu=http%3a%2f%2f5b0988e595225.cdn.sohucs.com%2fimages%2f20180806%2f379293af90b94500906b4dac1db13107.jpeg&ehk=Fhc2KHXdcB53oUxf01tfIUaLg%2faldqOfDPp8L7abNLI%3d&risl=&pid=ImgRaw&r=0" alt="健脾养胃套餐" />
+          </div>
+          <div class="package-content">
+            <h3 class="package-title">健脾养胃套餐</h3>
+            <p class="package-desc">
+              由中医专家根据健脾养胃的养生原则精心调配，适合脾胃虚弱、消化不良人群。
+            </p>
+            <p class="package-price">¥398/周</p>
+            <a href="javascript:void(0)" class="select-package view-package">查看详情</a>
+          </div>
+        </div>
+        
+        <div class="diet-package" data-package-id="2">
+          <div class="package-image">
+            <img src="https://img.familydoctor.com.cn/cms/20240403/202404030356477943.jpg" alt="安神助眠套餐" />
+          </div>
+          <div class="package-content">
+            <h3 class="package-title">安神助眠套餐</h3>
+            <p class="package-desc">
+              采用具有安神助眠功效的食材，帮助改善睡眠质量，适合失眠、多梦人群。
+            </p>
+            <p class="package-price">¥428/周</p>
+            <a href="javascript:void(0)" class="select-package view-package">查看详情</a>
+          </div>
+        </div>
+        
+        <div class="diet-package" data-package-id="3">
+          <div class="package-image">
+            <img src="https://img95.699pic.com/photo/60021/3505.jpg_wh860.jpg" alt="气血双补套餐" />
+          </div>
+          <div class="package-content">
+            <h3 class="package-title">气血双补套餐</h3>
+            <p class="package-desc">
+              精选补气养血的食材，调理气血不足，适合面色苍白、容易疲劳的人群。
+            </p>
+            <p class="package-price">¥458/周</p>
+            <a href="javascript:void(0)" class="select-package view-package">查看详情</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- 定制膳食区域 -->
+    <section class="custom-diet">
+      <h3>个性化膳食定制</h3>
+      <p>
+        如果您有特殊的健康需求或饮食偏好，我们提供个性化膳食定制服务。请在订购表单中详细描述您的需求，我们的中医专家将为您量身定制专属膳食方案。
+      </p>
+    </section>
+    
+    <!-- 订购表单区域 -->
+    <section id="order" class="order-container">
+      <h3 class="widget-title">填写订购信息</h3>
+      
+      <!-- 订购表单 -->
+      <form id="orderForm">
+        <div class="form-group">
+          <label for="name">姓名</label>
+          <input type="text" id="name" placeholder="请输入您的姓名" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="phone">手机号码</label>
+          <input type="tel" id="phone" placeholder="请输入您的手机号码" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="address">配送地址</label>
+          <input type="text" id="address" placeholder="请输入详细配送地址" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="package">选择套餐</label>
+          <select id="package" required>
+            <option value="">请选择膳食套餐</option>
+            <option value="健脾养胃套餐">健脾养胃套餐 - ¥398/周</option>
+            <option value="安神助眠套餐">安神助眠套餐 - ¥428/周</option>
+            <option value="气血双补套餐">气血双补套餐 - ¥458/周</option>
+            <option value="个性化定制">个性化定制 - 请在备注中说明</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="quantity">订购数量</label>
+          <input type="number" id="quantity" min="1" value="1" required>
+          <p class="small-text">多点多优惠，请参考套餐详情页的优惠方案</p>
+        </div>
+        
+        <div class="form-group">
+          <label for="duration">订购时长</label>
+          <select id="duration" required>
+            <option value="">请选择订购时长</option>
+            <option value="1周">1周</option>
+            <option value="2周">2周</option>
+            <option value="1个月">1个月</option>
+            <option value="2个月">2个月</option>
+            <option value="3个月">3个月</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="start-date">开始日期</label>
+          <input type="date" id="start-date" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="dietary-needs">特殊需求</label>
+          <textarea id="dietary-needs" placeholder="请描述您的健康状况、饮食禁忌或其他特殊需求"></textarea>
+        </div>
+        
+        <button type="submit" class="submit-btn">提交订购</button>
+      </form>
+      
+      <!-- 订购成功消息 -->
+      <div class="success-message" id="successMessage">
+        <div class="success-icon">
+          <i class="fa fa-check-circle"></i>
+        </div>
+        <h3 class="success-title">订购成功！</h3>
+        <p class="success-desc">
+          感谢您的订购，我们的工作人员将在<span class="highlight">24小时内</span>与您联系确认详情
+        </p>
+        
+        <div class="order-card">
+          <div class="card-header">
+            <h4>订单详情</h4>
+          </div>
+          <div class="card-body">
+            <div class="detail-row">
+              <span class="detail-label">订购人：</span>
+              <span id="detailName">-</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">联系电话：</span>
+              <span id="detailPhone">-</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">膳食套餐：</span>
+              <span id="detailPackage">-</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">订购数量：</span>
+              <span id="detailQuantity">-</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">订购时长：</span>
+              <span id="detailDuration">-</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">订单编号：</span>
+              <span id="orderId">-</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="action-buttons">
+          <a href="#" class="action-btn btn-primary" onclick="window.print()">
+            <i class="fa fa-print"></i> 打印订单
+          </a>
+          <a href="/" class="action-btn btn-secondary">
+            <i class="fa fa-home"></i> 返回首页
+          </a>
+          <a href="订购膳食.html.html" class="action-btn btn-secondary">
+            <i class="fa fa-cutlery"></i> 查看更多套餐
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 页脚（与全站一致） -->
+  <footer class="footer">
+    <div class="container">
+      <p>© 2025 膳食中医 版权所有 | 京ICP备12345678号</p>
+      <p>联系我们：400-888-8888 | info@shanshizhongyi.com</p>
+    </div>
+  </footer>
+
+  <!-- 套餐详情模态框 -->
+  <div id="packageModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div class="package-detail">
+        <div class="detail-image">
+          <img id="modalImage" src="" alt="" />
+        </div>
+        <div class="detail-info">
+          <h2 class="detail-title" id="modalTitle">套餐名称</h2>
+          <p class="detail-desc" id="modalDesc">套餐描述</p>
+          <p class="detail-price" id="modalPrice">¥0/周</p>
+          
+          <!-- 多点多优惠表格 -->
+          <h3 class="widget-title">多点多优惠</h3>
+          <table class="discount-table" id="discountTable">
+            <tr>
+              <th>订购数量</th>
+              <th>单价</th>
+              <th>总价</th>
+              <th>优惠</th>
+            </tr>
+            <tr>
+              <td>1份</td>
+              <td id="price-1"></td>
+              <td id="total-1"></td>
+              <td>无</td>
+            </tr>
+            <tr>
+              <td>2-4份</td>
+              <td id="price-2"></td>
+              <td id="total-2"></td>
+              <td>每份优惠¥10</td>
+            </tr>
+            <tr>
+              <td>5-9份</td>
+              <td id="price-3"></td>
+              <td id="total-3"></td>
+              <td>每份优惠¥20</td>
+            </tr>
+            <tr>
+              <td>10份及以上</td>
+              <td id="price-4"></td>
+              <td id="total-4"></td>
+              <td>每份优惠¥30 + 赠送养生汤包</td>
+            </tr>
+          </table>
+          
+          <!-- 数量选择器 -->
+          <div class="quantity-selector">
+            <div class="quantity-btn minus-btn">-</div>
+            <input type="number" id="modalQuantity" class="quantity-input" value="1" min="1">
+            <div class="quantity-btn plus-btn">+</div>
+          </div>
+          
+          <p class="total-price">
+            总价：<span id="modalTotalPrice">¥0</span>
+          </p>
+          
+          <button id="addToOrderBtn" class="submit-btn">
+            <i class="fa fa-shopping-cart"></i> 加入订单
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 套餐数据
+    const packages = [
+      {
+        id: 1,
+        name: "健脾养胃套餐",
+        price: 398,
+        originalPrice: 398,
+        description: "由中医专家根据健脾养胃的养生原则精心调配，适合脾胃虚弱、消化不良人群。",
+        image: "https://picsum.photos/600/400?random=1",
+        discounts: [
+          { min: 1, max: 1, discount: 0 },
+          { min: 2, max: 4, discount: 10 },
+          { min: 5, max: 9, discount: 20 },
+          { min: 10, max: Infinity, discount: 30 }
+        ]
+      },
+      {
+        id: 2,
+        name: "安神助眠套餐",
+        price: 428,
+        originalPrice: 428,
+        description: "采用具有安神助眠功效的食材，帮助改善睡眠质量，适合失眠、多梦人群。",
+        image: "https://picsum.photos/600/400?random=2",
+        discounts: [
+          { min: 1, max: 1, discount: 0 },
+          { min: 2, max: 4, discount: 10 },
+          { min: 5, max: 9, discount: 20 },
+          { min: 10, max: Infinity, discount: 30 }
+        ]
+      },
+      {
+        id: 3,
+        name: "气血双补套餐",
+        price: 458,
+        originalPrice: 458,
+        description: "精选补气养血的食材，调理气血不足，适合面色苍白、容易疲劳的人群。",
+        image: "https://picsum.photos/600/400?random=3",
+        discounts: [
+          { min: 1, max: 1, discount: 0 },
+          { min: 2, max: 4, discount: 10 },
+          { min: 5, max: 9, discount: 20 },
+          { min: 10, max: Infinity, discount: 30 }
+        ]
+      }
+    ];
+
+    // 当前选中的套餐
+    let currentPackage = null;
+
+    // 模态框相关
+    const modal = document.getElementById('packageModal');
+    const closeBtn = document.querySelector('.close');
+    const modalImage = document.getElementById('modalImage');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDesc = document.getElementById('modalDesc');
+    const modalPrice = document.getElementById('modalPrice');
+    const modalQuantity = document.getElementById('modalQuantity');
+    const modalTotalPrice = document.getElementById('modalTotalPrice');
+    const addToOrderBtn = document.getElementById('addToOrderBtn');
+    const minusBtn = document.querySelector('.minus-btn');
+    const plusBtn = document.querySelector('.plus-btn');
+
+    // 打开套餐详情模态框
+    document.querySelectorAll('.view-package').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const packageId = parseInt(this.closest('.diet-package').dataset.packageId);
+        currentPackage = packages.find(pkg => pkg.id === packageId);
+        
+        if (currentPackage) {
+          modalImage.src = currentPackage.image;
+          modalImage.alt = currentPackage.name;
+          modalTitle.textContent = currentPackage.name;
+          modalDesc.textContent = currentPackage.description;
+          modalPrice.textContent = `¥${currentPackage.price}/周`;
+          
+          // 更新优惠表格
+          updateDiscountTable(currentPackage);
+          
+          // 重置数量和总价
+          modalQuantity.value = 1;
+          updateTotalPrice();
+          
+          // 显示模态框
+          modal.style.display = 'block';
+        }
+      });
+    });
+
+    // 关闭模态框
+    closeBtn.addEventListener('click', function() {
+      modal.style.display = 'none';
+    });
+
+    // 点击模态框外部关闭
+    window.addEventListener('click', function(event) {
+      if (event.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+
+    // 更新优惠表格
+    function updateDiscountTable(packageData) {
+      for (let i = 1; i <= 4; i++) {
+        const discount = packageData.discounts[i-1];
+        const price = packageData.originalPrice - discount.discount;
+        const total = price * discount.min;
+        
+        document.getElementById(`price-${i}`).textContent = `¥${price}`;
+        document.getElementById(`total-${i}`).textContent = `¥${total}`;
+      }
+    }
+
+    // 数量加减按钮
+    minusBtn.addEventListener('click', function() {
+      const currentValue = parseInt(modalQuantity.value);
+      if (currentValue > 1) {
+        modalQuantity.value = currentValue - 1;
+        updateTotalPrice();
+      }
+    });
+
+    plusBtn.addEventListener('click', function() {
+      const currentValue = parseInt(modalQuantity.value);
+      modalQuantity.value = currentValue + 1;
+      updateTotalPrice();
+    });
+
+    // 数量变化时更新总价
+    modalQuantity.addEventListener('change', updateTotalPrice);
+
+    // 更新总价
+    function updateTotalPrice() {
+      if (!currentPackage) return;
+      
+      const quantity = parseInt(modalQuantity.value);
+      let discount = 0;
+      
+      // 查找适用的折扣
+      for (const disc of currentPackage.discounts) {
+        if (quantity >= disc.min && quantity <= disc.max) {
+          discount = disc.discount;
+          break;
+        }
+      }
+      
+      const price = currentPackage.originalPrice - discount;
+      const total = price * quantity;
+      
+      modalTotalPrice.textContent = `¥${total}`;
+    }
+
+    // 添加到订单
+    addToOrderBtn.addEventListener('click', function() {
+      if (currentPackage && modalQuantity.value) {
+        document.getElementById('package').value = currentPackage.name;
+        document.getElementById('quantity').value = modalQuantity.value;
+        
+        // 平滑滚动到表单
+        document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
+        
+        // 关闭模态框
+        modal.style.display = 'none';
+      }
+    });
+
+    // 表单提交处理
+    document.getElementById('orderForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // 表单验证
+      const name = document.getElementById('name').value;
+      const phone = document.getElementById('phone').value;
+      const address = document.getElementById('address').value;
+      const selectedPackage = document.getElementById('package').value;
+      const quantity = document.getElementById('quantity').value;
+      const duration = document.getElementById('duration').value;
+      const startDate = document.getElementById('start-date').value;
+      
+      // 简单验证示例
+      if (!name || !phone || !address || !selectedPackage || !quantity || !duration || !startDate) {
+        alert('请填写所有必填字段');
+        return;
+      }
+      
+      // 手机号格式验证
+      const phoneRegex = /^1[3-9]\d{9}$/;
+      if (!phoneRegex.test(phone)) {
+        alert('请输入有效的手机号码');
+        return;
+      }
+      
+      // 日期验证（确保选择的是未来日期）
+      const selectedDate = new Date(startDate);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      
+      if (selectedDate < today) {
+        alert('请选择未来的日期');
+        return;
+      }
+      
+      // 格式化日期
+      const formattedDate = new Date(startDate).toLocaleDateString('zh-CN');
+      
+      // 生成随机订单号
+      const orderId = 'DS' + Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
+      
+      // 更新成功消息中的订单详情
+      document.getElementById('detailName').textContent = name;
+      document.getElementById('detailPhone').textContent = phone;
+      document.getElementById('detailPackage').textContent = selectedPackage;
+      document.getElementById('detailQuantity').textContent = quantity;
+      document.getElementById('detailDuration').textContent = duration;
+      document.getElementById('orderId').textContent = orderId;
+      
+      // 隐藏表单，显示成功消息
+      document.getElementById('orderForm').style.display = 'none';
+      document.getElementById('successMessage').style.display = 'block';
+      document.getElementById('successMessage').classList.add('active');
+      
+      // 平滑滚动到成功消息
+      document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
+    });
+    
+    // 添加页面加载时的日期默认值（今天）
+    document.addEventListener('DOMContentLoaded', function() {
+      const dateInput = document.getElementById('start-date');
+      if (dateInput) {
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.min = today;
+        dateInput.value = today;
+      }
+    });
+  </script>
+</body>
+</html>    
