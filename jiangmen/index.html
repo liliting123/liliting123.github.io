@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>江门市历史名人 - 水墨风格旅游推广</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 水墨风格基础样式 */
+        body {
+            font-family: 'SimSun', 'Microsoft YaHei', serif;
+            color: #333;
+            line-height: 1.8;
+            background-color: #f5f3f0; /* 宣纸底色 */
+            background-image: 
+                linear-gradient(rgba(180, 170, 150, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(180, 170, 150, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+            overflow-x: hidden;
+        }
+
+        /* 导航栏样式 */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px 0;
+            z-index: 1000;
+            background-image: url('images/bg0.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .nav-container {
+            width: 90%;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .nav-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #664a29; /* 深褐色标题 */
+            font-family: 'SimSun', serif;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #664a29;
+            padding: 5px 12px;
+            font-size: 14px;
+            font-family: 'SimSun', serif;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: 0;
+            left: 50%;
+            background-color: #664a29;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #8b5a2b;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        /* 版块基础样式 */
+        .section {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 60px 20px;
+            text-align: center;
+            width: 100%;
+            overflow: hidden;
+        }
+        
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .section > * {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .section-center {
+            text-align: center;
+        }
+        
+        /* 不同水墨风格背景类 - 增强区分度 */
+        .bg-light {
+            background-color: #f8f6f3;
+            background-image: url('images/bg1.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        
+        .bg-ink-wash-1 {
+            background-image: url('images/bg.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        
+        .bg-ink-wash-2 {
+              background-image: url('images/bg3.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        
+        .bg-ink-wash-3 {
+            background-image: url('images/bg2.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-blend-mode: overlay;
+            background-color: rgba(230, 225, 215, 0.8);
+        }
+        
+        .bg-ink-wash-4 {
+            background-image: url('images/bg0.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-blend-mode: overlay;
+            background-color: rgba(215, 210, 200, 0.9);
+        }
+        
+        .bg-ink-wash-5 {
+            background-image: url('images/bg4.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* 水墨风格内容容器 */
+        .ink-wash-content {
+            background-color: rgba(255, 255, 255, 0.92);
+            padding: 40px;
+            border-radius: 8px;
+            max-width: 1000px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
+            width: 90%;
+            backdrop-filter: blur(5px);
+        }
+
+        /* 图文左右布局 */
+        .two-column-layout {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 30px;
+        }
+
+        .left-column,
+        .right-column,
+        .text-column,
+        .image-column {
+            width: calc(50% - 15px);
+            min-width: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .image-column {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .text-column {
+            background-color: rgba(255, 255, 255, 0.92);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(180, 170, 150, 0.3);
+            text-align: left;
+            backdrop-filter: blur(5px);
+        }
+        
+
+        /* 水墨风格图片 */
+        .ink-wash-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .ink-wash-image:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* 卡片网格布局 - 水墨风格 */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+            width: 100%;
+            justify-items: center;
+        }
+
+        .feature-card {
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(180, 170, 150, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card h3 {
+            color: #664a29;
+            margin-bottom: 15px;
+            font-family: 'SimSun', serif;
+            border-bottom: 1px solid rgba(180, 170, 150, 0.3);
+            padding-bottom: 10px;
+        }
+
+        /* 引用卡片样式 - 水墨风格 */
+        .quote-card {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-left: 3px solid #8b5a2b;
+            padding: 20px;
+            margin: 20px 0;
+            font-style: italic;
+            font-family: 'SimSun', serif;
+        }
+
+        /* 标题样式 - 水墨风格 */
+        .section h2 {
+            font-size: 28px;
+            margin-bottom: 25px;
+            color: #664a29;
+            font-family: 'SimSun', serif;
+            text-align: center;
+            border-bottom: 2px solid rgba(180, 170, 150, 0.3);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+
+        /* 段落样式 - 水墨风格 */
+        .section p {
+            font-size: 16px;
+            margin-bottom: 20px;
+            text-align: left;
+            font-family: 'SimSun', serif;
+            color: #444;
+            line-height: 1.8;
+        }
+
+        /* 人物卡片 - 水墨风格 */
+        .person-card {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(180, 170, 150, 0.2);
+            text-align: left;
+        }
+
+        .person-card h3 {
+            color: #664a29;
+            margin-bottom: 15px;
+            font-family: 'SimSun', serif;
+        }
+
+        /* 图片展示区 */
+        .image-showcase {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .showcase-item {
+            width: 220px;
+            margin: 15px;
+            text-align: center;
+        }
+
+        .showcase-item img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border: 6px solid white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Website Hero Title Styles */
+        #hero {
+            min-height: 70vh;
+            padding: 0;
+            margin-top: 112px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .hero-background {
+            width: 100%;
+            height: 100%;
+            background-image: url('images/江门标题图片.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .hero-content {
+            text-align: center;
+            color: white;
+            z-index: 2;
+            padding: 40px;
+            max-width: 800px;
+        }
+        
+        .hero-content h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            font-family: 'SimSun', serif;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-content p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            font-family: 'SimSun', serif;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            color: white !important;
+            text-align: center !important;
+        }
+        
+        .hero-quote {
+            border-top: 2px solid rgba(255, 255, 255, 0.7);
+            border-bottom: 2px solid rgba(255, 255, 255, 0.7);
+            padding: 15px 0;
+            margin: 20px 0;
+        }
+        
+        .hero-quote p {
+            font-size: 18px;
+            font-style: italic;
+            font-family: 'SimSun', serif;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            margin-bottom: 0 !important;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            background-color: #8b5a2b;
+            opacity: 0.6;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1px;
+        }
+
+        .timeline-item {
+            padding: 15px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background-color: white;
+            border: 3px solid #8b5a2b;
+            border-radius: 50%;
+            top: 20px;
+            z-index: 1;
+        }
+
+        .left {
+            left: 0;
+        }
+
+        .right {
+            left: 50%;
+        }
+
+        .left::after {
+            right: -8px;
+        }
+
+        .right::after {
+            left: -8px;
+        }
+
+        .timeline-content {
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(180, 170, 150, 0.2);
+        }
+
+        /* 引用区块 - 水墨风格 */
+        .quote-section {
+            font-style: italic;
+            font-size: 18px;
+            color: #664a29;
+            font-family: 'SimSun', serif;
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            position: relative;
+        }
+
+        .quote-section::before, .quote-section::after {
+            content: '"';
+            font-size: 40px;
+            color: #8b5a2b;
+            opacity: 0.3;
+            position: absolute;
+        }
+
+        .quote-section::before {
+            top: 0;
+            left: 10px;
+        }
+
+        .quote-section::after {
+            bottom: -20px;
+            right: 10px;
+        }
+
+        /* 页脚样式 */
+        .footer {
+            text-align: center;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-top: 1px solid rgba(180, 170, 150, 0.2);
+            font-family: 'SimSun', serif;
+            color: #664a29;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-links {
+                flex-direction: column;
+                gap: 8px;
+                display: none;
+            }
+
+            .section h2 {
+                font-size: 24px;
+            }
+
+            .section p {
+                font-size: 15px;
+            }
+
+            .two-column-layout {
+                flex-direction: column;
+            }
+
+            .left-column,
+            .right-column,
+            .text-column,
+            .image-column {
+                width: 100%;
+            }
+
+            .timeline::after {
+                left: 31px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .timeline-item::after {
+                left: 21px;
+            }
+
+            .right {
+                left: 0;
+            }
+        }
+
+        /* 列表样式 - 水墨风格 */
+        ul {
+            list-style-type: disc;
+            padding-left: 25px;
+            margin-bottom: 20px;
+            font-family: 'SimSun', serif;
+        }
+
+        ul ul {
+            list-style-type: circle;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+            color: #444;
+        }
+
+        /* 按钮样式 - 水墨风格 */
+        .btn-ink {
+            display: inline-block;
+            padding: 10px 25px;
+            background-color: #f5f3f0;
+            color: #664a29;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-family: 'SimSun', serif;
+            border: 1px solid #8b5a2b;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .btn-ink:hover {
+            background-color: #8b5a2b;
+            color: #f5f3f0;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body>
+    
+    <section id="hero" class=" hero-background">
+            <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-title">Jiangmen Historical Celebrities Tourism Promotion</div>
+            <div class="nav-links">
+                <a href="#travel">Travel Guide</a>
+                <a href="#intro">Introduction</a>
+                <a href="#timeline">Historical Evolution</a>
+                <a href="#celebrities">Hall of Fame</a>
+                <a href="#tang">Tang Yin & Jiangmen</a>
+                <a href="#su">Su Shi's Footprints</a>
+                <a href="#qu">Qichao Culture</a>
+                <a href="#attractions">Celebrity Attractions</a>
+                <a href="#stories">Celebrity Stories</a>
+                <!-- <a href="#timeline">Historical Timeline</a> -->
+            </div>
+        </div>
+    </nav>
+        <div class="hero-container" style="margin-top: 30px;">
+            <div class="hero-content">
+                <h1>Historical Celebrities of Jiangmen</h1>
+                <p>Inheriting a thousand years of cultural heritage, promoting the spirit of famous figures</p>
+                <div class="hero-quote">
+                    <p>A gathering place of celebrities, landscapes surpassing Lingnan</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Part 10: Travel Guide -->
+    <section id="travel" class="section bg-ink-wash-1">
+          <div class="two-column-layout">
+              <div class="left-column">
+                  <div class="ink-wash-content">
+                      <h2>Travel Guide</h2>
+                      <p>Jiangmen has convenient transportation with highways, railways, and ports connecting to various parts of the country. There are multiple bus routes and taxis in the city, making it convenient for tourists to travel.</p>
+                      <p><strong>Recommended Travel Routes:</strong></p>
+                      <p>Day 1: Liang Qichao's Former Residence → Bird Paradise → Tangerine Peel Village</p>
+                      <p>Day 2: Guifeng Mountain Scenic Area → Yutai Temple → Chen Baisha Memorial Hall</p>
+                      <p>Day 3: Feng Ru Memorial Museum → Kaiping Diaolou</p>
+                      <p><strong>Local Cuisine:</strong> Gujing roast goose, Xinhui tangerine peel, Kaiping Magang goose, Enping rice noodles, etc.</p>
+                      <p><strong>Best Travel Season:</strong> Spring (March-May) and Autumn (September-November), with pleasant climate suitable for travel.</p>
+                  </div>
+              </div>
+              <div class="right-column">
+                  <div class="ink-wash-image">
+                      <img src="images/jiangmen-bg10.jpg" alt="Jiangmen Travel" style="width: 100%; height: auto; border-radius: 8px;">
+                  </div>
+              </div>
+          </div>
+    </section>
+      <!-- Part 1: Introduction -->
+    <section id="intro" class="section section-center bg-light">
+        <div class="ink-wash-content">
+            <h2>Introduction to Jiangmen</h2>
+            <p>Jiangmen, also known as "Wuyi", is a prefecture-level city in Guangdong Province, located in the western part of the Pearl River Delta. It is an important node city in the Guangdong-Hong Kong-Macao Greater Bay Area and a famous hometown of overseas Chinese in China. With a long history and profound cultural heritage, Jiangmen has nurtured many historical celebrities such as Liang Qichao, Chen Baisha, and Feng Ru.</p>
+            <p>Jiangmen not only has rich natural landscapes but also numerous cultural relics and tourist attractions related to historical celebrities. It is a charming city that combines natural beauty with human history.</p>
+            <div class="quote-section">
+                <p>"Beautiful landscapes of Jiangmen, numerous celebrities of Wuyi"</p>
+            </div>
+        </div>
+    </section>
+
+      <!-- Part 9: Historical Timeline -->
+    <section id="timeline" class="section bg-ink-wash-5">
+        <div class="ink-wash-content">
+            <h2>Historical Timeline</h2>
+            <div class="timeline">
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <h3>1428</h3>
+                        <p>Chen Baisha was born in Xinhui, Jiangmen</p>
+                    </div>
+                </div>
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <h3>1097</h3>
+                        <p>Su Shi was demoted to Hainan and passed through Jiangmen</p>
+                    </div>
+                </div>
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <h3>1873</h3>
+                        <p>Liang Qichao was born in Chakeng Village, Xinhui, Jiangmen</p>
+                    </div>
+                </div>
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <h3>1884</h3>
+                        <p>Feng Ru was born in Enping, Jiangmen</p>
+                    </div>
+                </div>
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <h3>1909</h3>
+                        <p>Feng Ru successfully manufactured and piloted China's first aircraft</p>
+                    </div>
+                </div>
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <h3>1929</h3>
+                        <p>Liang Qichao passed away</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Part 2: Historical Evolution -->
+    <!-- <section id="history" class="section bg-ink-wash-2">
+        <div style="max-width: 1000px; margin: 0 auto; width: 90%;">
+            <div style="margin-bottom: 30px; text-align: center;">
+                <img src="images/jiangmen-bg2.jpg" alt="Jiangmen History" class="ink-wash-image" style="max-width: 100%;">
+            </div>
+            
+            <div class="text-column" style="width: 100%;">
+                <h2>Historical Evolution of Jiangmen</h2>
+                <p>The history of Jiangmen can be traced back to the Neolithic Age, with humans living and reproducing here more than 5,000 years ago. During the Han Dynasty, the Jiangmen area belonged to Nanhai County; during the Tang Dynasty, it was established as Gangzhou; and during the Ming and Qing Dynasties, it gradually developed into an important commercial port.</p>
+                <p>In modern times, Jiangmen became an important foreign trade port and hometown of overseas Chinese in China. Many overseas Chinese from Jiangmen traveled across the oceans and achieved brilliant achievements around the world. After China's reform and opening up, Jiangmen's economy developed rapidly and became an important manufacturing base in the Pearl River Delta.</p>
+                <div class="quote-card">
+                    <p>"Millennium-old Wuyi, century-old commercial port"</p>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- Part 3: Hall of Fame -->
+    <section id="celebrities" class="section section-center bg-ink-wash-3">
+        <div class="ink-wash-content">
+            <h2>Jiangmen Hall of Fame</h2>
+            <div class="card-grid" style="display: flex; flex-wrap: wrap; gap: 30px; justify-content: center;">
+                <div class="feature-card" style="flex: 1; min-width: 300px; height: 100%;">
+                    <h3>Liang Qichao (1873-1929)</h3>
+                    <p>A modern Chinese thinker, politician, educator, historian, and writer. He was one of the leaders of the Reform Movement of 1898 and a representative figure of modern Chinese reformers and new legalists.</p>
+                </div>
+                <div class="feature-card" style="flex: 1; min-width: 300px; height: 100%;">
+                    <h3>Chen Baisha (1428-1500)</h3>
+                    <p>A thinker, educator, calligrapher, and poet of the Ming Dynasty. Born in Xinhui, Jiangmen, he was a pioneer of the Mind Learning school in the Ming Dynasty and was known as "Mr. Baisha".</p>
+                </div>
+                <div class="feature-card" style="flex: 1; min-width: 300px; height: 100%;">
+                    <h3>Feng Ru (1884-1912)</h3>
+                    <p>China's first aircraft designer, manufacturer, and aviator, honored as "the Father of Chinese Aviation".</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Part 4: Tang Yin & Jiangmen -->
+    <section id="tang" class="section bg-ink-wash-4" style="background-color: rgba(236, 236, 236, 1);">
+        <div class="two-column-layout">
+             <div class="right-column">
+                <img src="images/1.jpg" alt="Tang Yin Artwork" class="ink-wash-image" />
+            </div>
+            <div class="text-column">
+                <h2>Tang Yin (1470–1524)</h2>
+                <ul style="list-style-type: disc; padding-left: 20px;">
+                    <li>Renaissance man of the Ming dynasty—painter, poet, calligrapher.</li>
+                    <li>Connection with Jiangmen: repeatedly visited Guifeng Mountain in Xinhui; the local legend "Tang Yin Paints Guifeng" is still told today.</li>
+                    <li>Representative legacy
+                        <ul style="list-style-type: circle; padding-left: 20px;">
+                            <li>Painting: Autumn Scenery of Guifeng Mountain</li>
+                            <li>Poem: Song of the Peach-Blossom Cottage</li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="quote-section" style="margin-top: 20px;">
+                    <p>"I would rather die drunk among blossoms than kneel before carriages and horses."</p>
+                </div>
+            </div>
+           
+        </div>
+    </section>
+
+    <!-- Part 5: Su Shi's Footprints -->
+    <section id="su" class="section bg-ink-wash-5">
+        <div class="two-column-layout">
+           
+            <div class="text-column">
+                <h2>Su Shi (1037–1101)</h2>
+                <ul>
+                    <li>Northern Song master of prose, poetry, calligraphy and statesmanship.</li>
+                    <li>Connection with Jiangmen: on his way to exile in Hainan (1097) he stayed in the area, climbed Guifeng Mountain, visited Yutai Temple and composed several verses that are still inscribed on local steles.</li>
+                    <li>Representative legacy</li>
+                    <ul style="list-style-type: circle;">
+                        <li>Poem Eating Lychees: "Three hundred lychees a day—gladly would I be a native of Lingnan."</li>
+                        <li>Lyric Red Cliff (Nián Nú Jiāo • Chìbì Huáigǔ)</li>
+                    </ul>
+                </ul>
+            </div>
+             <div class="image-column">
+                <img src="images/2.jpg" alt="Guifeng Mountain" class="ink-wash-image">
+            </div>
+        </div>
+    </section>
+
+    <!-- Part 6: Qichao Culture -->
+    <section id="qu" class="section bg-ink-wash-2">
+        <div class="two-column-layout" style="align-items: stretch;">
+            <div class="right-column" style="display: flex; flex-direction: column; justify-content: center;">
+                <img src="images/3.jpg" alt="Liang Qichao" class="ink-wash-image" />
+            </div>
+            <div class="text-column" style="display: flex; flex-direction: column; justify-content: center;">
+                <h2>Liang Qichao (1873–1929)</h2>
+                <ul style="list-style-type: disc; padding-left: 20px;">
+                    <li>Influential modern reformer, political thinker and historian.</li>
+                    <li>Connection with Jiangmen: native of Chakeng Village, Xinhui; his former residence is a nationally protected site and a key stop on cultural tours.</li>
+                    <li>Representative legacy
+                        <ul style="list-style-type: circle; padding-left: 20px;">
+                            <li>On Reform (Biànfǎ Tōngyì)</li>
+                            <li>Essay Young China: "If the youth are wise, the nation will be wise; if the youth are strong, the nation will be strong."</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Part 7: Celebrity Attractions -->
+    <section id="attractions" class="section bg-ink-wash-3">
+        <div class="ink-wash-content">
+        <h2>Celebrity Attractions</h2>
+        <div class="card-grid" style="width: 90%; max-width: 1200px; margin: 0 auto;">
+                <div class="feature-card">
+                    <img src="images/liang-qichao-residence.jpg" alt="Liang Qichao's Former Residence"
+                        style="width: 100%; height: 200px; object-fit: cover; margin-bottom: 15px; border-radius: 8px;">
+                    <h3>Liang Qichao's Former Residence</h3>
+                    <p>Located in Chakeng Village, Xinhui District, Jiangmen, it is a national key cultural relics protection unit and the birthplace and growth place of Liang Qichao.</p>
+                </div>
+                <div class="feature-card">
+                    <img src="images/chen-baisha-memorial.jpg" alt="Chen Baisha Memorial Hall"
+                        style="width: 100%; height: 200px; object-fit: cover; margin-bottom: 15px; border-radius: 8px;">
+                    <h3>Chen Baisha Memorial Hall</h3>
+                    <p>Built to commemorate the Ming Dynasty thinker and educator Chen Baisha, showcasing his life story and academic achievements.</p>
+                </div>
+                <div class="feature-card">
+                    <img src="images/fengru-museum.jpg" alt="Feng Ru Memorial Museum"
+                        style="width: 100%; height: 200px; object-fit: cover; margin-bottom: 15px; border-radius: 8px;">
+                    <h3>Feng Ru Memorial Museum</h3>
+                    <p>A special museum commemorating Feng Ru, the Father of Chinese Aviation, showcasing the early development history of Chinese aviation.</p>
+                </div>
+                <div class="feature-card">
+                    <img src="images/guifeng-mountain.jpg" alt="Guifeng Mountain"
+                        style="width: 100%; height: 200px; object-fit: cover; margin-bottom: 15px; border-radius: 8px;">
+                    <h3>Guifeng Mountain Scenic Area</h3>
+                    <p>A famous scenic area in Jiangmen where many literati and scholars left their footprints in history.</p>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="#travel" class="btn-ink">View Travel Guide</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Part 8: Celebrity Stories -->
+    <section id="stories" class="section bg-ink-wash-4">
+        <div class="ink-wash-content">
+        <h2>Celebrity Stories</h2>
+        <div style="display: flex; flex-direction: column; gap: 30px; width: 90%; max-width: 900px; margin: 0 auto;">
+            <div class="person-card">
+            <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                <div style="width: 8px; height: 30px; background-color: #8b5a2b; margin-right: 15px;"></div>
+                <h3 style="color: #664a29; margin: 0;">Liang Qichao's Educational Philosophy</h3>
+            </div>
+                <p>Liang Qichao attached great importance to education and believed that "education is the foundation of building a nation". He proposed the educational concept of comprehensive development of "moral education, intellectual education, and physical education", emphasizing the cultivation of students' innovative spirit and practical ability. Liang Qichao's educational thoughts have had a profound impact on the development of modern Chinese education.</p>
+            </div>
+            <div class="person-card">
+            <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                <div style="width: 8px; height: 30px; background-color: #8b5a2b; margin-right: 15px;"></div>
+                <h3 style="color: #664a29; margin: 0;">Feng Ru's Aviation Dream</h3>
+            </div>
+                <p>Feng Ru developed a strong interest in mechanical manufacturing from an early age. To realize China's aviation dream, he traveled across the ocean to the United States to learn advanced technology. In 1909, Feng Ru successfully manufactured and piloted the first aircraft designed by a Chinese person, pioneering the history of Chinese aviation.</p>
+            </div>
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="#celebrities" class="btn-ink">View Hall of Fame</a>
+            </div>
+        </div>
+        </div>
+    </section>
+
+  
+
+    
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Jiangmen Historical Celebrities Tourism Promotion &copy; 2025</p>
+    </footer>
+
+    <script>
+        // 平滑滚动效果
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80, // 减去导航栏高度
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+    </script>
+</body>
+
+</html>
